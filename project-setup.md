@@ -272,3 +272,13 @@ protected_branches=('main' 'master'); current_branch=$(git rev-parse --abbrev-re
 "dev": "ng serve --proxy-config proxy.conf.json",
 "build": "ng build --configuration=production",
 ```
+
+## CICD pipelines using Git actions
+
+- Create workflows as done in the project
+- Install vercel globally and run "vercel" command to create local project
+- Grab projectId and orgId from project.json file in .vercel folder
+- Create github secrets using projectId and orgId with same name of variables used in workflows
+- Create vercel token under Account setting in user dropdown -> tokens
+- Create one more github secret VERCEL_TOKEN for vercel token.
+- Finally, create project on vercel by attaching the github repo.
