@@ -1,0 +1,9 @@
+{
+	"editor.detectIndentation": true,
+	"editor.useEditorConfig": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit"
+	},
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2
+}
