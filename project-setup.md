@@ -94,6 +94,63 @@ export default [
 "format": "npx prettier . --write"
 ```
 
+## lint-staged
+
+- Install lint-staged
+
+```bash
+npm i -D lint-staged
+```
+
+- Add following code to package.json
+
+```bash
+"lint-staged": {
+	"*.{ts,js,json,html,css,scss}": [
+		"eslint --fix",
+		"prettier --write"
+	]
+}
+```
+
+## Husky
+
+- Install husky
+
+```bash
+npm i -D husky
+```
+
+- Add script in package.json
+
+```bash
+"prepare": "husky install"
+```
+
+- Initialize husky
+
+```bash
+npx husky init
+```
+
+- Add pre-commit hook
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/husky.sh"
+
+npx lint-staged
+```
+
+- Add pre-push hook
+
+```bash
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/husky.sh"
+
+protected_branches=('main' 'master'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
+```
+
 ## Development server
 
 To start a local development server, run:
