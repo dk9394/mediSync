@@ -8,27 +8,20 @@ Following are the steps or checklist to follow for the project's initial setup.
 
 ```bash
 [*]
-charset = utf-8
 indent_style = tab
 indent_size = 2
-insert_final_newline = true
-trim_trailing_whitespace = true
 ```
 
-- Force IDE to follow settings from .editorconfig
+- Use following editor settings under .vscode/settings.json
 
 ```bash
 {
 	"editor.detectIndentation": true,
-	"editor.useEditorConfig": true, // Force to use settings from .editorconfig
+	"editor.useEditorConfig": true,
 	"editor.codeActionsOnSave": {
-		"source.organizeImports": "explicit" // organise imports
+		"source.organizeImports": "explicit"
 	},
-	"typescript.tsserver.watchOptions": "vscode",
-	"editor.quickSuggestions": {
-		"strings": true
-	},
-	"editor.insertSpaces": true,
+	"editor.insertSpaces": false,
 	"editor.tabSize": 2
 }
 ```
@@ -51,8 +44,14 @@ npm i -D prettier
 	"useTabs": true,
 	"tabWidth": 2,
 	"trailingComma": "es5",
-	"printWidth": 120
+	"printWidth": 100
 }
+```
+
+- Add following script in package.json
+
+```bash
+"format": "npx prettier . --write"
 ```
 
 ## ESLint
@@ -61,6 +60,12 @@ npm i -D prettier
 
 ```bash
 ng add @angular-eslint/schematics
+```
+
+- Add following script in package.json
+
+```bash
+"format": "npx eslint . --fix"
 ```
 
 ## Development server
