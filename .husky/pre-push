@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "Running pre-push checks..."
 
-protected_branches=('main' 'master' 'dev'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
+protected_branches=('main' 'master'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
