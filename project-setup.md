@@ -43,6 +43,19 @@ ng add @angular-eslint/schematics
 "lint:fix": "npx eslint . --fix"
 ```
 
+- Add ignore files
+
+```bash
+tseslint.config(
+	{
+		ignores: ['coverage/**', 'dist/**', 'node_modules/**'],
+	},
+	{
+		...
+	}
+)
+```
+
 ## Prettier formatter
 
 - Install prettier
@@ -238,10 +251,24 @@ npx lint-staged
 protected_branches=('main' 'master'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
 ```
 
-## Development server
+## Add proxy.conf.json for local cors issues
 
-To start a local development server, run:
+- Add the following code
 
 ```bash
-ng serve
+{
+	"/api": {
+		"target": "http://localhost:3000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	}
+}
+```
+
+- Create or update "dev" and "build" scripts in package.json as follows
+
+```bash
+"dev": "ng serve --proxy-config proxy.conf.json",
+"build": "ng build --configuration=production",
 ```
