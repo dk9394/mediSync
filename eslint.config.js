@@ -3,9 +3,15 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 
+import prettierConfig from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
+
 module.exports = tseslint.config(
 	{
 		files: ['**/*.ts'],
+		plugins: {
+			prettier: prettierPlugin,
+		},
 		extends: [
 			eslint.configs.recommended,
 			...tseslint.configs.recommended,
@@ -30,11 +36,14 @@ module.exports = tseslint.config(
 					style: 'kebab-case',
 				},
 			],
+			...(prettierPlugin.configs?.recommended?.[0]?.rules ?? {}),
 		},
 	},
 	{
 		files: ['**/*.html'],
 		extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
-		rules: {},
+		rules: {
+			...prettierConfig.rules,
+		},
 	}
 );
