@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-echo "Running pre-commit command..."
+echo "Running pre-commit"
 
 npx lint-staged
