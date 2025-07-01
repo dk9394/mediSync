@@ -1,7 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
 @plugin "daisyui" {
 	themes:
 		light --default,
 		dark --prefersdark;
+}
+
+* {
+	font-family: 'Outfit', sans-serif;
+	font-weight: 200;
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.layout-container {
+	@apply container mx-auto px-2;
 }
