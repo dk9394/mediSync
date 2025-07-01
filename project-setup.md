@@ -237,7 +237,7 @@ npx husky init
 
 ```bash
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/husky.sh"
+echo "Running pre-commit"
 
 npx lint-staged
 ```
@@ -245,10 +245,10 @@ npx lint-staged
 - Add pre-push hook
 
 ```bash
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/husky.sh"
+#!/bin/sh
+echo "Running pre-push"
 
-protected_branches=('main' 'master'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
+protected_branches=('master' 'main' 'dev'); current_branch=$(git rev-parse --abbrev-ref HEAD); for branch in "${protected_branches[@]}"; do if [ "$current_branch" = "$branch" ]; then echo '🚫 Direct push to '$branch' is not allowed! Please use a pull request.'; exit 1; fi; done
 ```
 
 ## Add proxy.conf.json for local cors issues
