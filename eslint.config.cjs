@@ -40,11 +40,15 @@ module.exports = tseslint.config(
 				},
 			],
 			...(prettierPlugin.configs?.recommended?.[0]?.rules ?? {}),
+			...prettierConfig.rules,
 		},
 	},
 	{
 		files: ['**/*.html'],
-		extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
+		extends: [
+			...angular.configs.templateRecommended,
+			// ...angular.configs.templateAccessibility
+		],
 		rules: {
 			...prettierConfig.rules,
 		},

@@ -1,0 +1,86 @@
+<div class="flex items-center justify-between text-sm py-4">
+	<ng-container *ngTemplateOutlet="logo"></ng-container>
+	<ul class="md:flex items-start gap-5 font-normal hidden">
+		@for (item of menu; track item.id) {
+			<li
+				class="group"
+				[routerLink]="item.url"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				<a class="py-1.5 cursor-pointer block">{{ item.name | uppercase }}</a>
+				<hr
+					class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block hidden"
+				/>
+			</li>
+		}
+	</ul>
+
+	<div class="flex items-center gap-4">
+		@if (loggedIn) {
+			<div class="group relative" [class.active]="isDropdownVisible">
+				<div class="flex items-center gap-2 cursor-pointer" (click)="toggleDropdown()">
+					<img class="w-8 rounded-full" src="assets/profile_pic.png" alt="Profile picture" />
+					<img class="w-2.5" src="icons/caret-down.svg" alt="Caret icon" />
+				</div>
+				<div
+					class="absolute top-0 right-0 mt-13 text-base text-gray-600 z-20 hidden group-[.active]:block"
+				>
+					<div class="min-w-48 bg-base-300 rounded flex flex-col gap-4 p-4">
+						<p class="hover:text-black cursor-pointer">My Profile</p>
+						<p class="hover:text-black cursor-pointer">My Appointments</p>
+						<p class="hover:text-black cursor-pointer">Logout</p>
+					</div>
+				</div>
+			</div>
+		} @else {
+			<button class="btn btn-primary rounded-full font-light hidden md:block">
+				Create account
+			</button>
+		}
+		<a class="cursor-pointer" (click)="showMobileMenu()">
+			<img class="w-6 md:hidden" src="icons/menu-icon.svg" alt="Menu icon" />
+		</a>
+
+		<div
+			class="flex flex-col md:hidden fixed left-0 right-0 top-0 p-4 bottom-0 z-20 overflow-hidden bg-white translate-x-full transition-transform"
+			[class.translate-none]="isMobileMenuOpen"
+		>
+			<div class="flex items-center justify-between">
+				<ng-container *ngTemplateOutlet="logo"></ng-container>
+				<a class="cursor-pointer" (click)="hideMobileMenu()">
+					<img src="icons/cross_icon.png" class="w-7" alt="Menu close icon" />
+				</a>
+			</div>
+			<ul class="flex flex-col flex-1 items-center gap-2 mt-5 py-4 text-lg font-normal">
+				@for (item of menu; track item.id) {
+					<li
+						class="group"
+						[routerLink]="item.url"
+						routerLinkActive="active"
+						[routerLinkActiveOptions]="{ exact: true }"
+						(click)="hideMobileMenu()"
+					>
+						<a class="px-4 py-2 block">{{ item.name | uppercase }}</a>
+						<hr
+							class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block hidden"
+						/>
+					</li>
+				}
+			</ul>
+			<div class="flex items-center gap-4">
+				<button class="btn btn-primary rounded-full flex-1">Login</button>
+				<button class="btn btn-primary btn-outline rounded-full flex-1">Signup</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #logo>
+	<div class="flex items-center gap-2">
+		<p class="w-6 h-6">
+			<img class="max-w-full" src="assets/logo.svg" alt="MediSync Logo" />
+		</p>
+		<p class="text-2xl font-bold">MediSync</p>
+	</div>
+</ng-template>
