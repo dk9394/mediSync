@@ -3,7 +3,7 @@ module.exports = {
 	testEnvironment: 'jsdom',
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
 	testMatch: ['**/+(*.)+(spec).+(ts)'],
-	collectCoverage: true,
+	collectCoverage: false,
 	coverageDirectory: 'coverage',
 	coverageReporters: ['json', 'lcov', 'text', 'html', 'text-summary'],
 	collectCoverageFrom: [
