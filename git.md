@@ -7,3 +7,9 @@
 ```bash
 git reset --soft HEAD~1
 ```
+
+- fatal: Need to specify how to reconcile divergent branches.
+
+```bash
+git config pull.rebase false
+```

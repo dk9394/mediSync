@@ -55,6 +55,9 @@
 		"*.{ts,js,json,html,css,scss}": [
 			"eslint --fix",
 			"prettier --write"
+		],
+		"*.{ts,js}": [
+			"npm run test"
 		]
 	},
 	"type": "module"
