@@ -1,0 +1,8 @@
+{
+	"rewrites": [
+		{
+			"source": "/(.*)",
+			"destination": "https://medi-sync-backend-tau.vercel.app"
+		}
+	]
+}
