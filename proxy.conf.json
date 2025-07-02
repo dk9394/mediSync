@@ -1,8 +1,0 @@
-{
-	"/api": {
-		"target": "https://medi-sync-backend-tau.vercel.app",
-		"secure": false,
-		"changeOrigin": true,
-		"logLevel": "debug"
-	}
-}
