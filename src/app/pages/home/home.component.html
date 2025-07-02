@@ -1,6 +1,6 @@
 <div class="flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20">
 	<div
-		class="items-center md:items-start md:w-1/2 flex flex-col justify-center gap-8 py-10 m-auto md:py-[10vw] md:mb-[-30px]"
+		class="items-center md:items-start md:w-1/2 flex flex-col justify-center gap-8 md:gap-5 lg:gap-8 py-10 m-auto md:py-[5rem] xl:py-[7rem] 2xl:py-[10rem] md:mb-[-30px]"
 	>
 		<p
 			class="text-center md:text-left text-3xl lg:text-4xl xl:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight"
@@ -38,12 +38,12 @@
 		Simply browse through our extensive list of trusted doctors, schedule your appointment
 		hassle-free.
 	</p>
-	<ul class="flex sm:justify-center gap-4 pt-5 w-full overflow-scroll">
+	<ul class="flex sm:justify-center gap-4 lg:gap-8 pt-5 w-full overflow-scroll">
 		@for (item of specialities; track $index) {
 			<li
 				class="flex flex-col items-center text-xs cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500"
 			>
-				<img class="w-16 sm:w-24 mb-2" [src]="item.image" alt="Item" />
+				<img class="w-20 sm:w-24 mb-2" [src]="item.image" alt="Item" />
 				<p>{{ item.speciality }}</p>
 			</li>
 		}
