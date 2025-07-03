@@ -1,1 +1,28 @@
-<p>doctors works!</p>
+<section class="flex items-start sm:gap-8 mt-5">
+	<ul class="list bg-base-100 rounded-box shadow-md w-75">
+		<li class="p-4 pb-2 text-sm opacity-50">Speciality Filter</li>
+		<li
+			class="list-row cursor-pointer text-base group"
+			(click)="onSpeciality(null)"
+			[class.active]="!filterby"
+		>
+			<div class="group-[.active]:font-bold">All Specialities</div>
+		</li>
+		@for (item of specialities; track $index) {
+			<li
+				class="list-row cursor-pointer text-base group"
+				(click)="onSpeciality(item.speciality)"
+				[class.active]="filterby === item.speciality"
+			>
+				<div class="group-[.active]:font-bold">{{ item.speciality }}</div>
+			</li>
+		}
+	</ul>
+	<div class="flex-1">
+		<h1 class="text-2xl font-medium mb-6">List of doctors based on speciality filter</h1>
+		<app-doctors-list
+			[doctorsList$]="doctors$"
+			overrideCSS="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 pt-0"
+		></app-doctors-list>
+	</div>
+</section>

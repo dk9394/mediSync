@@ -1,0 +1,22 @@
+@if ((doctorsList$ | async)?.length) {
+	<div class="grid grid-cols-auto gap-4 gap-y-6 px-3 sm:px-0" [class]="overrideCSS">
+		@for (item of doctorsList$ | async; track $index) {
+			<div
+				(click)="onDoctorClick(item)"
+				class="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
+			>
+				<img class="bg-blue-50" [src]="item.image" [alt]="item.name + '\'s' + ' image'" />
+				<div class="p-4">
+					<div class="flex items-center gap-2 text-sm text-center text-green-500">
+						<p class="w-2 h-2 bg-green-500 rounded-full"></p>
+						<p>Available</p>
+					</div>
+					<p class="text-gray-900 text-lg font-medium">{{ item.name }}</p>
+					<p class="text-gray-600 text-sm">{{ item.speciality }}</p>
+				</div>
+			</div>
+		}
+	</div>
+} @else {
+	<p>No doctor to show in this list.</p>
+}
