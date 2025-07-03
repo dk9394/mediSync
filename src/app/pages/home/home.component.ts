@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 
+import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
 import { IDoctor, IDoctorSpeciality } from '../../models/doctor';
 import { HomeService } from '../../services/home.service';
 
 @Component({
 	selector: 'app-home',
-	imports: [CommonModule],
+	imports: [CommonModule, DoctorsListComponent],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss',
 })
