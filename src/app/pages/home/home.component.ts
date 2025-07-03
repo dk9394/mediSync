@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 
+import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
 import { IDoctor, IDoctorSpeciality } from '../../models/doctor';
 import { HomeService } from '../../services/home.service';
 
 @Component({
 	selector: 'app-home',
-	imports: [CommonModule],
+	imports: [CommonModule, DoctorsListComponent],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss',
 })
@@ -17,7 +18,11 @@ export class HomeComponent implements OnInit {
 	specialities: IDoctorSpeciality[] = [];
 
 	ngOnInit(): void {
-		this.doctors$ = this.homeService.getAllDoctors();
+		this.doctors$ = this.homeService.getAllDoctors().pipe(
+			map((val) => {
+				return val.slice(0, 5);
+			})
+		);
 		this.specialities = this.homeService.getSpecialities();
 	}
 }

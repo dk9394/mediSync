@@ -22,6 +22,9 @@ export interface IDoctorResponse {
 }
 
 export interface IDoctorSpeciality {
+	id: number;
+	label: string;
 	speciality: string;
 	image: string;
+	active: boolean;
 }

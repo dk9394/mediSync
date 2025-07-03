@@ -1,9 +1,65 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { BehaviorSubject, takeUntil } from 'rxjs';
+
+import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
+import { IDoctor } from '../../models/doctor';
+import { HomeService } from '../../services/home.service';
+import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 
 @Component({
 	selector: 'app-doctors',
-	imports: [],
+	imports: [CommonModule, DoctorsListComponent, RouterModule],
 	templateUrl: './doctors.component.html',
 	styleUrl: './doctors.component.scss',
 })
-export class DoctorsComponent {}
+export class DoctorsComponent extends UntilDestroyed implements OnInit {
+	homeService = inject(HomeService);
+	router = inject(Router);
+	route = inject(ActivatedRoute);
+
+	private _doctors: IDoctor[] = [];
+	doctors$ = new BehaviorSubject<IDoctor[]>([]);
+	filterby: string | null = null;
+
+	specialities = this.homeService.getSpecialities().slice();
+
+	ngOnInit(): void {
+		this.homeService
+			.getAllDoctors()
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((val) => {
+				this._doctors = val;
+				this.doctors$.next(val);
+				this.loadFilteredData();
+			});
+	}
+
+	onSpeciality(filterBy: string | null): void {
+		if (filterBy) {
+			this.router.navigate([], {
+				relativeTo: this.route,
+				queryParams: { filterBy },
+			});
+		} else {
+			this.router.navigate([], {
+				relativeTo: this.route,
+				queryParams: {},
+			});
+		}
+	}
+
+	private loadFilteredData(): void {
+		this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((val) => {
+			this.filterby = val['filterBy'];
+			if (this.filterby) {
+				this.doctors$.next(
+					this._doctors.slice().filter((doctor) => doctor.speciality === this.filterby)
+				);
+			} else {
+				this.doctors$.next(this._doctors.slice());
+			}
+		});
+	}
+}
