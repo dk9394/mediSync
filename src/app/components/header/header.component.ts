@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 import { IMenu } from './menu.interface';
 
@@ -11,6 +11,8 @@ import { IMenu } from './menu.interface';
 	styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+	router = inject(Router);
+
 	loggedIn = false;
 	isMobileMenuOpen = false;
 	isDropdownVisible = false;
@@ -24,7 +26,7 @@ export class HeaderComponent {
 		},
 		{
 			id: 2,
-			name: 'All Doctors',
+			name: 'Doctors',
 			url: 'doctors',
 			active: false,
 		},
@@ -52,5 +54,9 @@ export class HeaderComponent {
 
 	toggleDropdown(): void {
 		this.isDropdownVisible = !this.isDropdownVisible;
+	}
+
+	hasQueryParamsOrDynamicRoute(url: string): boolean {
+		return this.router.url.startsWith(`/${url}`);
 	}
 }

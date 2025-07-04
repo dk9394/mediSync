@@ -7,10 +7,11 @@
 				[routerLink]="item.url"
 				routerLinkActive="active"
 				[routerLinkActiveOptions]="{ exact: true }"
+				[class.continue-route]="hasQueryParamsOrDynamicRoute(item.url)"
 			>
 				<a class="py-1.5 cursor-pointer block">{{ item.name | uppercase }}</a>
 				<hr
-					class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block hidden"
+					class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block group-[.continue-route]:block hidden"
 				/>
 			</li>
 		}
@@ -59,11 +60,12 @@
 						[routerLink]="item.url"
 						routerLinkActive="active"
 						[routerLinkActiveOptions]="{ exact: true }"
+						[class.continue-route]="hasQueryParamsOrDynamicRoute(item.url)"
 						(click)="hideMobileMenu()"
 					>
 						<a class="px-4 py-2 block">{{ item.name | uppercase }}</a>
 						<hr
-							class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block hidden"
+							class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block group-[.continue-route]:block hidden"
 						/>
 					</li>
 				}
