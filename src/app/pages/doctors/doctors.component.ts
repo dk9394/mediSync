@@ -3,9 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, takeUntil } from 'rxjs';
 
+import { Store } from '@ngrx/store';
 import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
-import { IDoctor } from '../../models/doctor';
 import { HomeService } from '../../services/home.service';
+import { IDoctor } from '../../store/doctors/doctor';
+import { selectDoctors } from '../../store/doctors/doctors.selectors';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 
 @Component({
@@ -16,6 +18,7 @@ import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 })
 export class DoctorsComponent extends UntilDestroyed implements OnInit {
 	homeService = inject(HomeService);
+	store = inject(Store);
 	router = inject(Router);
 	route = inject(ActivatedRoute);
 
@@ -26,8 +29,8 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 	specialities = this.homeService.getSpecialities().slice();
 
 	ngOnInit(): void {
-		this.homeService
-			.getAllDoctors()
+		this.store
+			.select(selectDoctors.doctors)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((val) => {
 				this._doctors = val;

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { IDoctor, IDoctorResponse, IDoctorSpeciality } from '../models/doctor';
+import { IDoctor, IDoctorResponse, IDoctorSpeciality } from '../store/doctors/doctor';
 
 @Injectable({
 	providedIn: 'root',
@@ -12,13 +12,8 @@ export class HomeService {
 
 	doctorsList: IDoctor[] = [];
 
-	getAllDoctors(): Observable<IDoctor[]> {
-		return this.httpClient.get<IDoctorResponse>('/api/doctor/list').pipe(
-			map((res) => {
-				this.doctorsList = res.doctors; // Use Ngrx store instead.
-				return this.doctorsList;
-			})
-		);
+	getAllDoctors(): Observable<IDoctorResponse> {
+		return this.httpClient.get<IDoctorResponse>('/api/doctor/list');
 	}
 
 	getDoctor(id: string): IDoctor | undefined {

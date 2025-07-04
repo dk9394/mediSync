@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 
-import { IDoctor } from '../../models/doctor';
 import { HomeService } from '../../services/home.service';
+import { IDoctor } from '../../store/doctors/doctor';
 
 @Component({
 	selector: 'app-appointment',

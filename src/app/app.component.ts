@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { DoctorsActions } from './store/doctors/doctors.actions';
 
 @Component({
 	selector: 'app-root',
@@ -10,6 +12,10 @@ import { HeaderComponent } from './components/header/header.component';
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss',
 })
-export class AppComponent {
-	title = 'medi-sync';
+export class AppComponent implements OnInit {
+	store = inject(Store);
+
+	ngOnInit(): void {
+		this.store.dispatch(DoctorsActions.loadDoctors());
+	}
 }
