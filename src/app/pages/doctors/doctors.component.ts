@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, takeUntil } from 'rxjs';
 
-import { Store } from '@ngrx/store';
 import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
 import { HomeService } from '../../services/home.service';
 import { IDoctor } from '../../store/doctors/doctor';
