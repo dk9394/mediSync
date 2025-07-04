@@ -1,6 +1,5 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { AppointmentComponent } from './appointment.component';
 
@@ -10,7 +9,8 @@ describe('AppointmentComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [AppointmentComponent, RouterTestingModule, HttpClientTestingModule],
+			imports: [AppointmentComponent],
+			providers: [provideMockStore()],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(AppointmentComponent);

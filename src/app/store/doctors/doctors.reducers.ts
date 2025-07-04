@@ -7,16 +7,20 @@ export interface DoctorsState {
 	list: IDoctor[];
 	currentDoctor: IDoctor | null;
 	loading: boolean;
-	success: string | null;
-	failure: string | null;
+	success: boolean;
+	failure: boolean;
+	successMsg?: string | null;
+	failureMsg?: string | null;
 }
 
 const initialState: DoctorsState = {
 	list: [],
 	currentDoctor: null,
 	loading: false,
-	success: null,
-	failure: null,
+	success: false,
+	failure: false,
+	successMsg: null,
+	failureMsg: null,
 };
 
 export const doctorsReducer = createReducer(
@@ -27,14 +31,19 @@ export const doctorsReducer = createReducer(
 		list: data.doctors,
 		loading: false,
 		success: data.success,
-		failure: null,
+		failure: false,
 	})),
 	on(DoctorsActions.loadDoctorsFailure, (state, { message }) => ({
 		...state,
 		list: [],
 		currentDoctor: null,
 		loading: false,
-		success: null,
-		failure: message,
+		success: false,
+		failure: true,
+		failureMsg: message,
+	})),
+	on(DoctorsActions.addCurrentDoctor, (state, { currentDoctor }) => ({
+		...state,
+		currentDoctor,
 	}))
 );

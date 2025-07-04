@@ -1,25 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { HomeService } from '../../services/home.service';
 import { IDoctor } from '../../store/doctors/doctor';
+import { selectDoctors } from '../../store/doctors/doctors.selectors';
 
 @Component({
 	selector: 'app-appointment',
-	imports: [RouterModule],
+	imports: [CommonModule, RouterModule],
 	templateUrl: './appointment.component.html',
 	styleUrl: './appointment.component.scss',
 })
 export class AppointmentComponent implements OnInit {
-	route = inject(ActivatedRoute);
-	homeService = inject(HomeService);
+	store = inject(Store);
 
-	doctor!: IDoctor | undefined;
+	doctor$!: Observable<IDoctor | null>;
 
 	ngOnInit(): void {
-		this.route.params.subscribe((params) => {
-			this.doctor = this.homeService.getDoctor(params['id']);
-			console.log(this.doctor);
-		});
+		this.doctor$ = this.store.select(selectDoctors.currentDoctor);
 	}
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IDoctor, IDoctorResponse, IDoctorSpeciality } from '../store/doctors/doctor';
+import { IDoctorResponse, IDoctorSpeciality } from '../models/doctors.interfaces';
 
 @Injectable({
 	providedIn: 'root',
@@ -10,14 +10,8 @@ import { IDoctor, IDoctorResponse, IDoctorSpeciality } from '../store/doctors/do
 export class HomeService {
 	httpClient = inject(HttpClient);
 
-	doctorsList: IDoctor[] = [];
-
 	getAllDoctors(): Observable<IDoctorResponse> {
 		return this.httpClient.get<IDoctorResponse>('/api/doctor/list');
-	}
-
-	getDoctor(id: string): IDoctor | undefined {
-		return this.doctorsList.find((doctor) => doctor._id === id);
 	}
 
 	getSpecialities(): IDoctorSpeciality[] {
