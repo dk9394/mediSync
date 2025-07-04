@@ -8,7 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
 	{ path: '', component: HomeComponent, pathMatch: 'full' },
-	{ path: 'doctors', component: DoctorsComponent, children: [] },
+	{ path: 'doctors', component: DoctorsComponent },
 	{ path: 'doctors/:id', component: AppointmentComponent },
 	{ path: 'about', component: AboutComponent },
 	{ path: 'contact', component: ContactComponent },

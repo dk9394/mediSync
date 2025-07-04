@@ -1,47 +1,29 @@
 <section class="md:flex md:items-start sm:gap-8 mt-5">
-	<div class="flex items-center mb-5 gap-5 md:hidden">
-		<div class="dropdown dropdown-start">
-			<div tabindex="0" role="button" class="btn m-1 flex items-center gap-3">
-				<span>Speciality Filter</span>
-				<img src="icons/caret-down.svg" alt="icon" />
-			</div>
-			<ul tabindex="0" class="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm">
-				<li (click)="onSpeciality(null)" [class.active]="!filterby"><a>All Specialities</a></li>
-				@for (item of specialities; track $index) {
-					<li (click)="onSpeciality(item.speciality)" [class.active]="filterby === item.speciality">
-						<a class="py-3">{{ item.speciality }}</a>
-					</li>
-				}
-			</ul>
-		</div>
-		@if (filterby) {
-			<div class="flex items-center flex-1 gap-2">
-				<span>Filtered by: </span>
-				<span class="font-medium">{{ filterby }}</span>
-			</div>
-		}
-	</div>
-	<ul class="list bg-base-100 rounded-box shadow-md w-50 xl:w-60 2xl:w-75 hidden md:block">
-		<li class="p-4 pb-2 text-sm opacity-50">Speciality Filter</li>
-		<li
-			class="list-row cursor-pointer text-base group"
-			(click)="onSpeciality(null)"
-			[class.active]="!filterby"
+	<div class="flex items-center gap-5 md:block mb-8 md:mb-0">
+		<div class="flex-1 text-sm opacity-50 px-4 py-2">Filter by Speciality</div>
+		<ul class="menu bg-base-100 w-50 xl:w-60 2xl:w-75 hidden md:block">
+			@for (item of specialities; track $index) {
+				<li
+					class="group"
+					(click)="onSpeciality(item.speciality)"
+					[class.active]="filterby === item.speciality"
+				>
+					<a class="text-base group-[.active]:font-bold py-2.5">{{ item.label }}</a>
+				</li>
+			}
+		</ul>
+		<select
+			class="select md:hidden w-auto"
+			(change)="onFilterChange($event)"
+			[(ngModel)]="filterby"
 		>
-			<div class="group-[.active]:font-bold">All Specialities</div>
-		</li>
-		@for (item of specialities; track $index) {
-			<li
-				class="list-row cursor-pointer text-base group"
-				(click)="onSpeciality(item.speciality)"
-				[class.active]="filterby === item.speciality"
-			>
-				<div class="group-[.active]:font-bold">{{ item.speciality }}</div>
-			</li>
-		}
-	</ul>
+			@for (item of specialities; track $index) {
+				<option [value]="item.speciality">{{ item.label }}</option>
+			}
+		</select>
+	</div>
 	<div class="flex-1">
-		<h1 class="text-2xl font-medium mb-6">List of doctors based on speciality filter</h1>
+		<h1 class="text-2xl font-medium mb-6">List of Doctors</h1>
 		@if (loading$ | async) {
 			<app-loading></app-loading>
 		} @else {

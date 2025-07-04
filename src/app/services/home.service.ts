@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { delay, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { IDoctorResponse, IDoctorSpeciality } from '../models/doctors.interfaces';
 
@@ -11,7 +11,7 @@ export class HomeService {
 	httpClient = inject(HttpClient);
 
 	getAllDoctors(): Observable<IDoctorResponse> {
-		return this.httpClient.get<IDoctorResponse>('/api/doctor/list').pipe(delay(22000));
+		return this.httpClient.get<IDoctorResponse>('/api/doctor/list');
 	}
 
 	getSpecialities(): IDoctorSpeciality[] {
@@ -58,6 +58,6 @@ export class HomeService {
 				image: 'assets/Gastroenterologist.svg',
 				active: false,
 			},
-		];
+		].slice();
 	}
 }

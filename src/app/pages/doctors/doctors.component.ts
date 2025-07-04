@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, of, takeUntil } from 'rxjs';
@@ -14,7 +15,7 @@ import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 
 @Component({
 	selector: 'app-doctors',
-	imports: [CommonModule, DoctorsListComponent, RouterModule, LoadingComponent],
+	imports: [CommonModule, RouterModule, FormsModule, DoctorsListComponent, LoadingComponent],
 	templateUrl: './doctors.component.html',
 	styleUrl: './doctors.component.scss',
 })
@@ -27,11 +28,12 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 	private _doctors: IDoctor[] = [];
 	loading$: Observable<boolean> = of(false);
 	doctors$ = new BehaviorSubject<IDoctor[]>([]);
-	filterby: string | null = null;
+	filterby = '';
 
 	specialities = this.homeService.getSpecialities();
 
 	ngOnInit(): void {
+		this.addAllSpecialists();
 		this.loading$ = this.store.select(selectDoctors.loading);
 		this.store
 			.select(selectDoctors.list)
@@ -57,6 +59,11 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 		}
 	}
 
+	onFilterChange(event: Event): void {
+		const filterByValue = (event.target as HTMLSelectElement).value;
+		this.onSpeciality(filterByValue);
+	}
+
 	onDoctorClick(doctor: IDoctor): void {
 		this.store.dispatch(DoctorsActions.addCurrentDoctor({ currentDoctor: doctor }));
 		this.router.navigate([doctor._id], { relativeTo: this.route });
@@ -64,7 +71,7 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 
 	private loadFilteredData(): void {
 		this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((queryParams) => {
-			this.filterby = queryParams['filterBy'];
+			this.filterby = queryParams['filterBy'] ?? '';
 			if (this.filterby) {
 				this.doctors$.next(
 					this._doctors.slice().filter((doctor) => doctor.speciality === this.filterby)
@@ -72,6 +79,16 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 			} else {
 				this.doctors$.next(this._doctors.slice());
 			}
+		});
+	}
+
+	private addAllSpecialists(): void {
+		this.specialities.unshift({
+			id: 0,
+			label: 'All Specialists',
+			speciality: '',
+			image: '',
+			active: false,
 		});
 	}
 }
