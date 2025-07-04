@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { map, Observable, of } from 'rxjs';
 
 import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
+import { LoadingComponent } from '../../components/loading/loading.component';
 import { HomeService } from '../../services/home.service';
 import { IDoctor } from '../../store/doctors/doctor';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
@@ -12,7 +13,7 @@ import { selectDoctors } from '../../store/doctors/doctors.selectors';
 
 @Component({
 	selector: 'app-home',
-	imports: [CommonModule, RouterModule, DoctorsListComponent],
+	imports: [CommonModule, RouterModule, DoctorsListComponent, LoadingComponent],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss',
 })

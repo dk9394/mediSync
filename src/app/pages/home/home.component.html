@@ -57,9 +57,7 @@
 	</p>
 
 	@if (loading$ | async) {
-		<div class="flex items-center justify-center">
-			<span class="loading loading-spinner loading-xl"></span>
-		</div>
+		<app-loading></app-loading>
 	} @else {
 		<app-doctors-list
 			[doctorsList$]="doctors$"

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, of, takeUntil } from 'rxjs';
 
 import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
+import { LoadingComponent } from '../../components/loading/loading.component';
 import { HomeService } from '../../services/home.service';
 import { IDoctor } from '../../store/doctors/doctor';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
@@ -13,7 +14,7 @@ import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 
 @Component({
 	selector: 'app-doctors',
-	imports: [CommonModule, DoctorsListComponent, RouterModule],
+	imports: [CommonModule, DoctorsListComponent, RouterModule, LoadingComponent],
 	templateUrl: './doctors.component.html',
 	styleUrl: './doctors.component.scss',
 })

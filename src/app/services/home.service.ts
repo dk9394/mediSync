@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 
 import { IDoctorResponse, IDoctorSpeciality } from '../models/doctors.interfaces';
 
@@ -11,7 +11,7 @@ export class HomeService {
 	httpClient = inject(HttpClient);
 
 	getAllDoctors(): Observable<IDoctorResponse> {
-		return this.httpClient.get<IDoctorResponse>('/api/doctor/list');
+		return this.httpClient.get<IDoctorResponse>('/api/doctor/list').pipe(delay(22000));
 	}
 
 	getSpecialities(): IDoctorSpeciality[] {
