@@ -15,16 +15,3 @@ export interface IDoctor {
 		line2: string;
 	};
 }
-
-export interface IDoctorResponse {
-	success: boolean;
-	doctors: IDoctor[];
-}
-
-export interface IDoctorSpeciality {
-	id: number;
-	label: string;
-	speciality: string;
-	image: string;
-	active: boolean;
-}

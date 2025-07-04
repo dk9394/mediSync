@@ -9,6 +9,5 @@ export const apiPrefixInterceptor: HttpInterceptorFn = (req, next) => {
 	if (req.url.startsWith('/api')) {
 		updatedReq = req.clone({ url: `${baseUrl}${req.url}` });
 	}
-	console.log(updatedReq.url);
 	return next(updatedReq);
 };

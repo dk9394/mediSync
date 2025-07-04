@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
-import { IDoctor } from '../../models/doctor';
+import { IDoctor } from '../../store/doctors/doctor';
 
 @Component({
 	selector: 'app-doctors-list',
@@ -12,13 +12,12 @@ import { IDoctor } from '../../models/doctor';
 	styleUrl: './doctors-list.component.scss',
 })
 export class DoctorsListComponent {
-	@Input() doctorsList$: Observable<IDoctor[]> = of([]);
+	@Input() doctorsList$!: Observable<IDoctor[]>;
 	@Input() overrideCSS?: string =
 		'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 pt-5';
-	router = inject(Router);
-	route = inject(ActivatedRoute);
+	@Output() itemClick = new EventEmitter<IDoctor>();
 
 	onDoctorClick(doctor: IDoctor): void {
-		this.router.navigate([doctor._id], { relativeTo: this.route });
+		this.itemClick.emit(doctor);
 	}
 }
