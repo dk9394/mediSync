@@ -1,5 +1,27 @@
-<section class="flex items-start sm:gap-8 mt-5">
-	<ul class="list bg-base-100 rounded-box shadow-md w-75">
+<section class="md:flex md:items-start sm:gap-8 mt-5">
+	<div class="flex items-center mb-5 gap-5 md:hidden">
+		<div class="dropdown dropdown-start">
+			<div tabindex="0" role="button" class="btn m-1 flex items-center gap-3">
+				<span>Speciality Filter</span>
+				<img src="icons/caret-down.svg" alt="icon" />
+			</div>
+			<ul tabindex="0" class="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm">
+				<li (click)="onSpeciality(null)" [class.active]="!filterby"><a>All Specialities</a></li>
+				@for (item of specialities; track $index) {
+					<li (click)="onSpeciality(item.speciality)" [class.active]="filterby === item.speciality">
+						<a class="py-3">{{ item.speciality }}</a>
+					</li>
+				}
+			</ul>
+		</div>
+		@if (filterby) {
+			<div class="flex items-center flex-1 gap-2">
+				<span>Filtered by: </span>
+				<span class="font-medium">{{ filterby }}</span>
+			</div>
+		}
+	</div>
+	<ul class="list bg-base-100 rounded-box shadow-md w-50 xl:w-60 2xl:w-75 hidden md:block">
 		<li class="p-4 pb-2 text-sm opacity-50">Speciality Filter</li>
 		<li
 			class="list-row cursor-pointer text-base group"
