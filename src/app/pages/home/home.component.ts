@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 	specialities: IDoctorSpeciality[] = [];
 
 	ngOnInit(): void {
-		this.doctors$ = this.store.select(selectDoctors.doctors).pipe(
+		this.doctors$ = this.store.select(selectDoctors.list).pipe(
 			map((val) => {
 				return val.slice(0, 5);
 			})

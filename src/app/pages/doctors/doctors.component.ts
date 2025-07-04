@@ -30,7 +30,7 @@ export class DoctorsComponent extends UntilDestroyed implements OnInit {
 
 	ngOnInit(): void {
 		this.store
-			.select(selectDoctors.doctors)
+			.select(selectDoctors.list)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe((val) => {
 				this._doctors = val;
