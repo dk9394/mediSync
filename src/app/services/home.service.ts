@@ -11,7 +11,7 @@ export class HomeService {
 	httpClient = inject(HttpClient);
 
 	getAllDoctors(): Observable<IDoctorResponse> {
-		return this.httpClient.get<IDoctorResponse>('/api/doctor/list').pipe(delay(22000));
+		return this.httpClient.get<IDoctorResponse>('/api/doctor/list').pipe(delay(5000));
 	}
 
 	getSpecialities(): IDoctorSpeciality[] {
