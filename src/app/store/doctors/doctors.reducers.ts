@@ -45,5 +45,9 @@ export const doctorsReducer = createReducer(
 	on(DoctorsActions.addCurrentDoctor, (state, { currentDoctor }) => ({
 		...state,
 		currentDoctor,
+	})),
+	on(DoctorsActions.addCurrentDoctorUsingId, (state, { id }) => ({
+		...state,
+		currentDoctor: state.list.find((doctor) => doctor._id === id) || null,
 	}))
 );

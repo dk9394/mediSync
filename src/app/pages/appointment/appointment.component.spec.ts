@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
 import { AppointmentComponent } from './appointment.component';
+import { AppointmentService } from './appointment.service';
 
 describe('AppointmentComponent', () => {
 	let component: AppointmentComponent;
@@ -9,8 +11,8 @@ describe('AppointmentComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [AppointmentComponent],
-			providers: [provideMockStore()],
+			imports: [AppointmentComponent, RouterTestingModule],
+			providers: [provideMockStore(), AppointmentService],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(AppointmentComponent);

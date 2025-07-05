@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { AppointmentComponent } from './components/appointment/appointment.component';
 import { AboutComponent } from './pages/about/about.component';
+import { AppointmentComponent } from './pages/appointment/appointment.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { DoctorsComponent } from './pages/doctors/doctors.component';
 import { HomeComponent } from './pages/home/home.component';
