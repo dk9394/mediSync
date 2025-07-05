@@ -1,0 +1,71 @@
+@if (doctor$ | async) {
+	<div class="flex flex-col sm:flex-row gap-4">
+		<div>
+			<img
+				class="bg-primary w-full sm:max-w-72 rounded-lg"
+				[src]="(doctor$ | async)?.image"
+				[alt]="(doctor$ | async)?.name + ' image'"
+			/>
+		</div>
+
+		<div
+			class="flex-1 border border-[#ADADAD] rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0"
+		>
+			<p class="flex items-center gap-2 text-3xl font-medium text-gray-700">
+				{{ (doctor$ | async)?.name }}
+				<img class="w-5" src="icons/verified_icon.svg" alt="verified icon" />
+			</p>
+			<div class="flex items-center gap-2 mt-1 text-gray-600">
+				<p>{{ (doctor$ | async)?.degree }} - {{ (doctor$ | async)?.speciality }}</p>
+				<button class="py-0.5 px-2 border text-xs rounded-full">
+					{{ (doctor$ | async)?.experience }}
+				</button>
+			</div>
+
+			<div>
+				<p class="flex items-center gap-1 text-sm font-medium text-[#262626] mt-3">
+					About <img class="w-3" src="icons/info_icon.svg" alt="info icon" />
+				</p>
+				<p class="text-sm text-gray-600 max-w-[700px] mt-1">{{ (doctor$ | async)?.about }}</p>
+			</div>
+
+			<p class="text-gray-600 font-medium mt-4">
+				Appointment fee: <span class="text-gray-800">{{ (doctor$ | async)?.fees | currency }}</span>
+			</p>
+		</div>
+	</div>
+
+	<div class="sm:ml-72 sm:pl-4 mt-8 font-medium text-[#565656]">
+		<p>Booking slots</p>
+		<div class="flex gap-4 items-center w-full overflow-x-scroll mt-8">
+			@for (item of bookingSlots; track $index) {
+				<div
+					class="text-center py-6 min-w-16 rounded-full cursor-pointer border border-[#DDDDDD]"
+					class="{{ item.date === bookingSlot.date ? 'bg-primary text-white' : '' }}"
+					(click)="onBookingDay(item)"
+				>
+					<p>{{ item.day }}</p>
+					<p>{{ item.date }}</p>
+				</div>
+			}
+		</div>
+
+		<div class="flex items-center gap-3 w-full overflow-x-scroll mt-6">
+			@for (item of bookingSlot.hours; track $index) {
+				<p
+					class="text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer text-[#949494] border border-[#B4B4B4]"
+					class="{{ item === slotTime ? 'bg-primary text-white' : '' }}"
+					(click)="onBookingHour(item)"
+				>
+					{{ item }}
+				</p>
+			}
+		</div>
+
+		<button class="btn btn-primary text-white text-sm font-light px-20 py-3 rounded-full my-8">
+			Book an appointment
+		</button>
+	</div>
+} @else {
+	<app-loading></app-loading>
+}
