@@ -1,0 +1,15 @@
+.input-field.ng-invalid.ng-touched {
+	--input-color: var(--color-error);
+	color: var(--input-color);
+}
+
+.validator-hint {
+	display: none;
+	visibility: visible;
+	--input-color: var(--color-error);
+	color: var(--input-color);
+
+	&.invalid {
+		display: block;
+	}
+}
