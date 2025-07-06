@@ -54,7 +54,7 @@
 			@for (item of bookingSlot.hours; track $index) {
 				<p
 					class="text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer text-[#949494] border border-[#B4B4B4]"
-					class="{{ item === slotTime ? 'bg-primary text-white' : '' }}"
+					class="{{ item === bookingSlot.slotTime ? 'bg-primary text-white' : '' }}"
 					(click)="onBookingHour(item)"
 				>
 					{{ item }}
@@ -62,7 +62,12 @@
 			}
 		</div>
 
-		<button class="btn btn-primary text-white text-sm font-light px-20 py-3 rounded-full my-8">
+		<button
+			type="button"
+			class="btn btn-primary text-white text-sm font-light px-20 py-3 rounded-full my-8"
+			[disabled]="!(bookingSlot.slotDate && bookingSlot.slotTime)"
+			(click)="onBookAppointment()"
+		>
 			Book an appointment
 		</button>
 	</div>

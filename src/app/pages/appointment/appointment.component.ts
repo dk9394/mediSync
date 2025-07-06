@@ -4,10 +4,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, takeUntil } from 'rxjs';
 
+import { AuthDialogService } from '../../components/auth-dialog/auth-dialog.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { IDoctor } from '../../store/doctors/doctor';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
 import { selectDoctors } from '../../store/doctors/doctors.selectors';
+import { selectUser } from '../../store/user/user.selectors';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 import { AppointmentService, IBookingSlot } from './appointment.service';
 
@@ -22,11 +24,12 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 	router = inject(Router);
 	route = inject(ActivatedRoute);
 	appointmentService = inject(AppointmentService);
+	authDialogService = inject(AuthDialogService);
 
 	doctor$!: Observable<IDoctor | null>;
 	bookingSlots: IBookingSlot[] = this.appointmentService.getBookingSlots();
 	bookingSlot: IBookingSlot = this.bookingSlots[0];
-	slotTime = '';
+	isUserLoggedIn = false;
 
 	ngOnInit(): void {
 		this.doctor$ = this.store.select(selectDoctors.currentDoctor);
@@ -38,6 +41,12 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 					list.find((doc) => doc._id === this.route.snapshot.paramMap.get('id')) ?? null;
 				this.store.dispatch(DoctorsActions.addCurrentDoctor({ currentDoctor: doctor }));
 			});
+		this.store
+			.select(selectUser.token)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((token) => {
+				this.isUserLoggedIn = !!token;
+			});
 	}
 
 	onBookingDay(slot: IBookingSlot): void {
@@ -45,6 +54,14 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 	}
 
 	onBookingHour(hour: string): void {
-		this.slotTime = hour;
+		this.bookingSlot.slotTime = hour;
+	}
+
+	onBookAppointment(): void {
+		if (this.isUserLoggedIn) {
+			console.log(this.bookingSlot);
+		} else {
+			this.authDialogService.open();
+		}
 	}
 }
