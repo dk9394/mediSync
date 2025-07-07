@@ -6,6 +6,7 @@ import {
 	ILoginCredentials,
 	ILoginResponse,
 	ILoginWithRoleResponse,
+	IUserResponse,
 } from '../models/user.interfaces';
 
 @Injectable({
@@ -14,9 +15,11 @@ import {
 export class UserService {
 	httpClient = inject(HttpClient);
 
+	private readonly USER_ENDPOINT = '/api/user';
+
 	login(loginCredentials: ILoginCredentials): Observable<ILoginWithRoleResponse> {
 		return this.httpClient
-			.post<ILoginResponse>('/api/user/login', loginCredentials.credentials)
+			.post<ILoginResponse>(`${this.USER_ENDPOINT}/login`, loginCredentials.credentials)
 			.pipe(
 				map((loginResponse) => {
 					return {
@@ -25,5 +28,9 @@ export class UserService {
 					};
 				})
 			);
+	}
+
+	getProfile(): Observable<IUserResponse> {
+		return this.httpClient.get<IUserResponse>(`${this.USER_ENDPOINT}/get-profile`);
 	}
 }

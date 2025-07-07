@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs';
 
+import { IUser } from '../../models/user.interfaces';
+import { selectUser } from '../../store/user/user.selectors';
+import { UntilDestroyed } from '../../utils/until-destroyed.directive';
+import { AuthDialogService } from '../auth-dialog/auth-dialog.service';
 import { IMenu } from './menu.interface';
 
 @Component({
@@ -10,10 +16,12 @@ import { IMenu } from './menu.interface';
 	templateUrl: './header.component.html',
 	styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent extends UntilDestroyed implements OnInit {
+	store = inject(Store);
 	router = inject(Router);
+	authDialogService = inject(AuthDialogService);
 
-	loggedIn = false;
+	loggedInUser: IUser | null = null;
 	isMobileMenuOpen = false;
 	isDropdownVisible = false;
 
@@ -44,6 +52,15 @@ export class HeaderComponent {
 		},
 	];
 
+	ngOnInit(): void {
+		this.store
+			.select(selectUser.userData)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((user) => {
+				this.loggedInUser = user;
+			});
+	}
+
 	showMobileMenu(): void {
 		this.isMobileMenuOpen = true;
 	}
@@ -54,6 +71,16 @@ export class HeaderComponent {
 
 	toggleDropdown(): void {
 		this.isDropdownVisible = !this.isDropdownVisible;
+	}
+
+	onLogin(): void {
+		this.hideMobileMenu();
+		this.authDialogService.open();
+	}
+
+	onCreateAccount(): void {
+		this.hideMobileMenu();
+		this.authDialogService.open(true);
 	}
 
 	hasQueryParamsOrDynamicRoute(url: string): boolean {

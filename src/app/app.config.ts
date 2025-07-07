@@ -7,13 +7,14 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 import { routes } from './app.routes';
 import { apiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
+import { authTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { appEffects, appReducers } from './store';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		provideRouter(routes),
-		provideHttpClient(withInterceptors([apiPrefixInterceptor])),
+		provideHttpClient(withInterceptors([apiPrefixInterceptor, authTokenInterceptor])),
 		provideStore(appReducers),
 		provideEffects(appEffects),
 		provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
