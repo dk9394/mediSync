@@ -35,19 +35,19 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 		{
 			id: 2,
 			name: 'Doctors',
-			url: '/doctors',
+			url: 'doctors',
 			active: false,
 		},
 		{
 			id: 3,
 			name: 'About',
-			url: '/about',
+			url: 'about',
 			active: false,
 		},
 		{
 			id: 4,
 			name: 'Contact us',
-			url: '/contact',
+			url: 'contact',
 			active: false,
 		},
 	];
