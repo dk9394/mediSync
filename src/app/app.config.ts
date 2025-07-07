@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, isDevMode, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -13,7 +13,13 @@ import { appEffects, appReducers } from './store';
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideZoneChangeDetection({ eventCoalescing: true }),
-		provideRouter(routes),
+		provideRouter(
+			routes,
+			withInMemoryScrolling({
+				scrollPositionRestoration: 'enabled',
+				anchorScrolling: 'enabled',
+			})
+		),
 		provideHttpClient(withInterceptors([apiPrefixInterceptor, authTokenInterceptor])),
 		provideStore(appReducers),
 		provideEffects(appEffects),

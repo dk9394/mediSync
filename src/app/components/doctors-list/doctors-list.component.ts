@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IDoctor } from '../../store/doctors/doctor';
+import { IDoctor } from '../../models/doctors.interfaces';
 
 @Component({
 	selector: 'app-doctors-list',

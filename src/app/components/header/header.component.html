@@ -50,13 +50,26 @@
 			class="flex flex-col md:hidden fixed left-0 right-0 top-0 p-4 bottom-0 z-20 overflow-hidden bg-white translate-x-full transition-transform"
 			[class.translate-none]="isMobileMenuOpen"
 		>
-			<div class="flex items-center justify-between">
+			<div class="flex items-center justify-between py-4">
 				<ng-container *ngTemplateOutlet="logo"></ng-container>
 				<a class="cursor-pointer" (click)="hideMobileMenu()">
-					<img src="icons/cross_icon.png" class="w-7" alt="Menu close icon" />
+					<svg
+						width="2rem"
+						height="2rem"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<line x1="18" y1="6" x2="6" y2="18" />
+						<line x1="6" y1="6" x2="18" y2="18" />
+					</svg>
 				</a>
 			</div>
-			<ul class="flex flex-col flex-1 gap-2 mt-5 py-4 text-base font-normal">
+			<ul class="flex flex-col flex-1 gap-2 py-4 text-base font-normal">
 				@for (item of menu; track item.id) {
 					<li
 						class="group px-4"
@@ -76,31 +89,46 @@
 					</li>
 				}
 			</ul>
-			@if (loggedInUser) {
-				<div class="flex items-center gap-4">
-					<img class="w-10 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
-					<p class="font-medium text-2xl flex-1">{{ loggedInUser.name }}</p>
-				</div>
-			} @else {
-				<div class="flex items-center gap-4">
-					<button class="btn btn-primary btn-lg rounded-full flex-1" (click)="onLogin()">
-						Login
-					</button>
-					<button
-						class="btn btn-primary btn-lg btn-outline rounded-full flex-1"
-						(click)="onCreateAccount()"
-					>
-						Sign up
-					</button>
-				</div>
-			}
+			<div class="p-2">
+				@if (loggedInUser) {
+					<div class="flex items-center gap-4 py-2 px-4 bg-base-300 rounded-full">
+						<img class="w-10 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
+						<p class="font-medium text-xl text-center flex-1">{{ loggedInUser.name }}</p>
+						<a class="cursor-pointer text-error w-10">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="30"
+								height="30"
+								viewBox="0 0 512 512"
+								fill="currentColor"
+							>
+								<path
+									d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9v-62.1h-128c-17.7 0-32-14.3-32-32v-64c0-17.7 14.3-32 32-32h128v-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96H96c-17.7 0-32 14.3-32 32v256c0 17.7 14.3 32 32 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-53 0-96-43-96-96V128C0 75 43 32 96 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32z"
+								/>
+							</svg>
+						</a>
+					</div>
+				} @else {
+					<div class="flex items-center gap-4">
+						<button class="btn btn-primary btn-lg rounded-full flex-1" (click)="onLogin()">
+							Login
+						</button>
+						<button
+							class="btn btn-primary btn-lg btn-outline rounded-full flex-1"
+							(click)="onCreateAccount()"
+						>
+							Sign up
+						</button>
+					</div>
+				}
+			</div>
 		</div>
 	</div>
 </div>
 
 <ng-template #logo>
-	<div class="flex items-center gap-2">
-		<p class="w-6 h-6">
+	<div class="flex items-center gap-3 cursor-pointer" [routerLink]="['/']">
+		<p class="w-7 h-7">
 			<img class="max-w-full" src="assets/logo.svg" alt="MediSync Logo" />
 		</p>
 		<p class="text-2xl font-bold">MediSync</p>

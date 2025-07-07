@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable, of, takeUntil } from 'rxjs';
 
 import { DoctorsListComponent } from '../../components/doctors-list/doctors-list.component';
 import { LoadingComponent } from '../../components/loading/loading.component';
+import { IDoctor } from '../../models/doctors.interfaces';
 import { HomeService } from '../../services/home.service';
-import { IDoctor } from '../../store/doctors/doctor';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
 import { selectDoctors } from '../../store/doctors/doctors.selectors';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
