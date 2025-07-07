@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 import { UserService } from '../../services/user.service';
 import { UserActions } from './user.actions';
@@ -15,11 +15,15 @@ export class UserEffects {
 			ofType(UserActions.loadUser),
 			switchMap(({ loginCredentials }) =>
 				this.userService.login(loginCredentials).pipe(
-					tap((data) => {
-						localStorage.setItem('auth-token', data.token);
-						localStorage.setItem('auth-userRole', data.role);
+					map((data) => {
+						if (data.success) {
+							localStorage.setItem('auth-token', data.token);
+							localStorage.setItem('auth-userRole', data.role);
+							return UserActions.loadUserSuccess({ data });
+						} else {
+							return UserActions.loadUserFailure({ message: data.message ?? '' });
+						}
 					}),
-					map((data) => UserActions.loadUserSuccess({ data })),
 					catchError((error) => of(UserActions.loadUserFailure({ message: error.message })))
 				)
 			)
@@ -38,7 +42,13 @@ export class UserEffects {
 			ofType(UserActions.loadUserProfile),
 			switchMap(() =>
 				this.userService.getProfile().pipe(
-					map((data) => UserActions.loadUserProfileSuccess({ data })),
+					map((data) => {
+						if (data.success) {
+							return UserActions.loadUserProfileSuccess({ data });
+						} else {
+							return UserActions.loadUserProfileFailure({ message: data.message ?? '' });
+						}
+					}),
 					catchError((error) => of(UserActions.loadUserProfileFailure({ message: error.message })))
 				)
 			)

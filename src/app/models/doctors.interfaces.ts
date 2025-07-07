@@ -19,6 +19,7 @@ export interface IDoctor {
 export interface IDoctorResponse {
 	success: boolean;
 	doctors: IDoctor[];
+	message?: string;
 }
 
 export interface IDoctorSpeciality {

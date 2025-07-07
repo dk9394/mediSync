@@ -15,7 +15,13 @@ export class DoctorsEffects {
 			ofType(DoctorsActions.loadDoctors),
 			mergeMap(() =>
 				this.homeService.getAllDoctors().pipe(
-					map((data) => DoctorsActions.loadDoctorsSuccess({ data })),
+					map((data) => {
+						if (data.success) {
+							return DoctorsActions.loadDoctorsSuccess({ data });
+						} else {
+							return DoctorsActions.loadDoctorsFailure({ message: data.message ?? '' });
+						}
+					}),
 					catchError((error) => of(DoctorsActions.loadDoctorsFailure({ message: error.message })))
 				)
 			)

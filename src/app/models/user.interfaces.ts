@@ -15,6 +15,7 @@ export interface ILoginCredentials {
 export interface ILoginResponse {
 	success: boolean;
 	token: string;
+	message?: string;
 }
 
 export interface ILoginWithRoleResponse extends ILoginResponse {
@@ -43,4 +44,5 @@ export interface IUser {
 export interface IUserResponse {
 	success: boolean;
 	userData: IUser;
+	message?: string;
 }
