@@ -18,10 +18,10 @@
 	</ul>
 
 	<div class="flex items-center gap-4">
-		@if (loggedIn) {
+		@if (loggedInUser) {
 			<div class="group relative" [class.active]="isDropdownVisible">
 				<div class="flex items-center gap-2 cursor-pointer" (click)="toggleDropdown()">
-					<img class="w-8 rounded-full" src="assets/profile_pic.png" alt="Profile picture" />
+					<img class="w-8 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
 					<img class="w-2.5" src="icons/caret-down.svg" alt="Caret icon" />
 				</div>
 				<div
@@ -35,7 +35,10 @@
 				</div>
 			</div>
 		} @else {
-			<button class="btn btn-primary rounded-full font-light hidden md:block">
+			<button
+				class="btn btn-primary rounded-full font-light hidden md:block"
+				(click)="onCreateAccount()"
+			>
 				Create account
 			</button>
 		}
@@ -53,27 +56,44 @@
 					<img src="icons/cross_icon.png" class="w-7" alt="Menu close icon" />
 				</a>
 			</div>
-			<ul class="flex flex-col flex-1 items-center gap-2 mt-5 py-4 text-lg font-normal">
+			<ul class="flex flex-col flex-1 gap-2 mt-5 py-4 text-base font-normal">
 				@for (item of menu; track item.id) {
 					<li
-						class="group"
+						class="group px-4"
 						[routerLink]="item.url"
 						routerLinkActive="active"
 						[routerLinkActiveOptions]="{ exact: true }"
 						[class.continue-route]="hasQueryParamsOrDynamicRoute(item.url)"
 						(click)="hideMobileMenu()"
 					>
-						<a class="px-4 py-2 block">{{ item.name | uppercase }}</a>
-						<hr
-							class="border-none outline-none h-0.5 bg-primary w-3/5 m-auto group-[.active]:block group-[.continue-route]:block hidden"
-						/>
+						<a
+							class="px-0 py-2 block group-[.active]:text-primary group-[.continue-route]:text-primary"
+							>{{ item.name | uppercase }}</a
+						>
+						<!-- <hr
+							class="border-none outline-none h-0.5 bg-primary w-1/2 group-[.active]:block group-[.continue-route]:block hidden"
+						/> -->
 					</li>
 				}
 			</ul>
-			<div class="flex items-center gap-4">
-				<button class="btn btn-primary rounded-full flex-1">Login</button>
-				<button class="btn btn-primary btn-outline rounded-full flex-1">Signup</button>
-			</div>
+			@if (loggedInUser) {
+				<div class="flex items-center gap-4">
+					<img class="w-10 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
+					<p class="font-medium text-2xl flex-1">{{ loggedInUser.name }}</p>
+				</div>
+			} @else {
+				<div class="flex items-center gap-4">
+					<button class="btn btn-primary btn-lg rounded-full flex-1" (click)="onLogin()">
+						Login
+					</button>
+					<button
+						class="btn btn-primary btn-lg btn-outline rounded-full flex-1"
+						(click)="onCreateAccount()"
+					>
+						Sign up
+					</button>
+				</div>
+			}
 		</div>
 	</div>
 </div>

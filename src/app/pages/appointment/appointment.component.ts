@@ -42,10 +42,10 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 				this.store.dispatch(DoctorsActions.addCurrentDoctor({ currentDoctor: doctor }));
 			});
 		this.store
-			.select(selectUser.token)
+			.select(selectUser.isUserLoggedIn)
 			.pipe(takeUntil(this.destroy$))
-			.subscribe((token) => {
-				this.isUserLoggedIn = !!token;
+			.subscribe((status) => {
+				this.isUserLoggedIn = status;
 			});
 	}
 
