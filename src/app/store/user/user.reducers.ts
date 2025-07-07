@@ -1,11 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { UserRole } from '../../models/user.interfaces';
+import { IUser, UserRole } from '../../models/user.interfaces';
 import { UserActions } from './user.actions';
 
 export interface UserState {
 	token: string | null;
 	role: UserRole | null;
+	userData: IUser | null;
 	loading: boolean;
 	success: boolean;
 	failure: boolean;
@@ -16,6 +17,7 @@ export interface UserState {
 const initialState: UserState = {
 	token: null,
 	role: null,
+	userData: null,
 	loading: false,
 	success: false,
 	failure: false,
@@ -38,6 +40,25 @@ export const userReducer = createReducer(
 		...state,
 		token: null,
 		role: null,
+		userData: null,
+		loading: false,
+		success: false,
+		failure: true,
+		failureMsg: message,
+	})),
+	on(UserActions.loadUserProfile, (state) => ({ ...state, loading: true })),
+	on(UserActions.loadUserProfileSuccess, (state, { data }) => ({
+		...state,
+		userData: data.userData,
+		loading: false,
+		success: data.success,
+		failure: false,
+	})),
+	on(UserActions.loadUserProfileFailure, (state, { message }) => ({
+		...state,
+		token: null,
+		role: null,
+		userData: null,
 		loading: false,
 		success: false,
 		failure: true,

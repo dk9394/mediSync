@@ -8,7 +8,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { takeUntil } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 
 import { UserRole } from '../../models/user.interfaces';
 import { UserActions } from '../../store/user/user.actions';
@@ -31,6 +31,7 @@ export class AuthDialogComponent extends UntilDestroyed implements OnInit {
 	userRole = UserRole.User;
 	isCreateMode = false;
 	form!: FormGroup;
+	loadingUser$!: Observable<boolean>;
 
 	get nameField() {
 		return this.form.get('name');
@@ -45,15 +46,19 @@ export class AuthDialogComponent extends UntilDestroyed implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.initializeForm();
 		this.store
-			.select(selectUser.token)
+			.select(selectUser.isUserLoggedIn)
 			.pipe(takeUntil(this.destroy$))
-			.subscribe((token) => {
-				if (token) {
+			.subscribe((status) => {
+				if (status) {
 					this.authDialogService.close();
 				}
 			});
+		this.loadingUser$ = this.store.select(selectUser.loading);
+		this.authDialogService.isCreateMode$.pipe(takeUntil(this.destroy$)).subscribe((mode) => {
+			this.isCreateMode = mode;
+			this.initializeForm();
+		});
 	}
 
 	onSubmit(): void {
@@ -72,6 +77,11 @@ export class AuthDialogComponent extends UntilDestroyed implements OnInit {
 	toggleMode(): void {
 		this.isCreateMode = !this.isCreateMode;
 		this.initializeForm();
+		this.form.reset();
+	}
+
+	onClose(): void {
+		this.authDialogService.close();
 		this.form.reset();
 	}
 

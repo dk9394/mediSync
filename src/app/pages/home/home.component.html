@@ -41,6 +41,8 @@
 	<ul class="flex sm:justify-center gap-4 lg:gap-8 pt-5 w-full overflow-scroll">
 		@for (item of specialities; track $index) {
 			<li
+				[routerLink]="['/doctors']"
+				[queryParams]="{ filterBy: item.speciality }"
 				class="flex flex-col items-center text-xs cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500"
 			>
 				<img class="w-20 sm:w-24 mb-2" [src]="item.image" alt="Item" />
@@ -64,7 +66,12 @@
 			(itemClick)="onDoctorClick($event)"
 		></app-doctors-list>
 		@if ((doctors$ | async)?.length) {
-			<button class="bg-blue-50 text-gray-600 px-12 py-3 rounded-full mt-10">more</button>
+			<button
+				class="bg-blue-50 text-gray-600 px-12 py-3 rounded-full mt-10 cursor-pointer"
+				[routerLink]="['/doctors']"
+			>
+				more
+			</button>
 		}
 	}
 </div>
@@ -75,11 +82,21 @@
 			<p>Book Appointment</p>
 			<p class="mt-4">With 100+ Trusted Doctors</p>
 		</div>
-		<button
-			class="btn btn-secondary text-sm sm:text-base text-gray-600 px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all"
-		>
-			Create account
-		</button>
+		@if (isUserLoggedIn$ | async) {
+			<button
+				class="btn btn-secondary text-sm sm:text-base text-gray-600 px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all"
+				[routerLink]="['/doctors']"
+			>
+				Book appointment
+			</button>
+		} @else {
+			<button
+				class="btn btn-secondary text-sm sm:text-base text-gray-600 px-8 py-3 rounded-full mt-6 hover:scale-105 transition-all"
+				(click)="onCreateAccount()"
+			>
+				Create account
+			</button>
+		}
 	</div>
 
 	<div class="hidden md:block md:w-1/2 lg:w-[370px] relative">

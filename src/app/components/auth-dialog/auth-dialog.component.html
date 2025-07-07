@@ -17,7 +17,7 @@
 					}
 				</h2>
 			</header>
-			<button type="button" class="btn btn-circle btn-ghost" (click)="authDialogService.close()">
+			<button type="button" class="btn btn-circle btn-ghost" (click)="onClose()">
 				<svg
 					width="1rem"
 					height="1rem"
@@ -88,7 +88,10 @@
 			</fieldset>
 			<div class="mb-2 mt-4">
 				<button type="submit" class="btn btn-primary w-full text-base" [disabled]="form.invalid">
-					{{ isCreateMode ? 'Create account' : 'Login' }}
+					<span>{{ isCreateMode ? 'Create account' : 'Login' }}</span>
+					@if (loadingUser$ | async) {
+						<span class="loading loading-dots loading-sm"></span>
+					}
 				</button>
 			</div>
 		</form>

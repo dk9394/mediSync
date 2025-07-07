@@ -1,3 +1,22 @@
+<div class="mb-5">
+	<button
+		type="button"
+		class="btn btn-ghost rounded-full flex items-center"
+		[routerLink]="['/doctors']"
+	>
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+			<path
+				d="M15 6L9 12L15 18"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
+
+		<span>Go Back</span>
+	</button>
+</div>
 @if (doctor$ | async) {
 	<div class="flex flex-col sm:flex-row gap-4">
 		<div>
@@ -62,14 +81,16 @@
 			}
 		</div>
 
-		<button
-			type="button"
-			class="btn btn-primary text-white text-sm font-light px-20 py-3 rounded-full my-8"
-			[disabled]="!(bookingSlot.slotDate && bookingSlot.slotTime)"
-			(click)="onBookAppointment()"
-		>
-			Book an appointment
-		</button>
+		<div class="my-10">
+			<button
+				type="button"
+				class="btn btn-primary btn-lg rounded-full px-15"
+				[disabled]="!(bookingSlot.slotDate && bookingSlot.slotTime)"
+				(click)="onBookAppointment()"
+			>
+				Book an appointment
+			</button>
+		</div>
 	</div>
 } @else {
 	<app-loading></app-loading>
