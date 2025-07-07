@@ -1,7 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IDoctorResponse } from '../../models/doctors.interfaces';
-import { IDoctor } from './doctor';
+import { IDoctor, IDoctorResponse } from '../../models/doctors.interfaces';
 
 const LOAD_DOCTORS = '[DOCTORS] load doctors';
 const LOAD_DOCTORS_SUCCESS = '[DOCTORS] load doctors success';

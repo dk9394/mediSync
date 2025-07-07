@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { IDoctor } from './doctor';
+import { IDoctor } from '../../models/doctors.interfaces';
 import { DoctorsActions } from './doctors.actions';
 
 export interface DoctorsState {

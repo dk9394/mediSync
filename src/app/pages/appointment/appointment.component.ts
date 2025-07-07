@@ -6,7 +6,7 @@ import { Observable, takeUntil } from 'rxjs';
 
 import { AuthDialogService } from '../../components/auth-dialog/auth-dialog.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
-import { IDoctor } from '../../store/doctors/doctor';
+import { IDoctor } from '../../models/doctors.interfaces';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
 import { selectDoctors } from '../../store/doctors/doctors.selectors';
 import { selectUser } from '../../store/user/user.selectors';
