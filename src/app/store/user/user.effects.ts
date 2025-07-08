@@ -4,7 +4,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 
 import { AppNotificationService } from '../../services/app-notification.service';
 import { UserService } from '../../services/user.service';
-import { AppNotifications } from '../../utils/app-notifications';
+import { AppNotifications } from '../../utils/app-notifications.constants';
 import { UserActions } from './user.actions';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class UserEffects {
 				this.userService.login(loginCredentials).pipe(
 					map((data) => {
 						localStorage.setItem('auth-token', data.token);
-						localStorage.setItem('auth-userRole', data.role);
+						localStorage.setItem('auth-user-role', data.role);
 						return UserActions.loadUserSuccess({ data });
 					}),
 					catchError((error) => {
