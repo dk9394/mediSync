@@ -16,15 +16,13 @@ export class UserEffects {
 			switchMap(({ loginCredentials }) =>
 				this.userService.login(loginCredentials).pipe(
 					map((data) => {
-						if (data.success) {
-							localStorage.setItem('auth-token', data.token);
-							localStorage.setItem('auth-userRole', data.role);
-							return UserActions.loadUserSuccess({ data });
-						} else {
-							return UserActions.loadUserFailure({ message: data.message ?? '' });
-						}
+						localStorage.setItem('auth-token', data.token);
+						localStorage.setItem('auth-userRole', data.role);
+						return UserActions.loadUserSuccess({ data });
 					}),
-					catchError((error) => of(UserActions.loadUserFailure({ message: error.message })))
+					catchError((error) => {
+						return of(UserActions.loadUserFailure({ message: error.message }));
+					})
 				)
 			)
 		)
@@ -42,13 +40,7 @@ export class UserEffects {
 			ofType(UserActions.loadUserProfile),
 			switchMap(() =>
 				this.userService.getProfile().pipe(
-					map((data) => {
-						if (data.success) {
-							return UserActions.loadUserProfileSuccess({ data });
-						} else {
-							return UserActions.loadUserProfileFailure({ message: data.message ?? '' });
-						}
-					}),
+					map((data) => UserActions.loadUserProfileSuccess({ data })),
 					catchError((error) => of(UserActions.loadUserProfileFailure({ message: error.message })))
 				)
 			)
