@@ -80,3 +80,17 @@ body {
 ::-webkit-scrollbar {
 	@apply hidden;
 }
+
+#toast-container.toast-container .ngx-toastr {
+	background-position: 20px center;
+	@apply text-sm px-5 py-3 pb-4 pl-14 w-75 bg-size-[16px] rounded-sm shadow-none;
+
+	&:hover {
+		box-shadow: none;
+		// @apply backdrop-brightness-90;
+	}
+
+	.toast-title {
+		@apply font-medium;
+	}
+}

@@ -6,6 +6,6 @@ export abstract class AppNotifications {
 	};
 	static readonly LOGIN_WARNING: IAppNotification = {
 		title: 'Login required',
-		message: `Please login to book any appointment`,
+		message: `Please login to book appointment`,
 	};
 }
