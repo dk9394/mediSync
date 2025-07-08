@@ -89,7 +89,7 @@
 			<div class="mb-2 mt-4">
 				<button type="submit" class="btn btn-primary w-full text-base" [disabled]="form.invalid">
 					<span>{{ isCreateMode ? 'Create account' : 'Login' }}</span>
-					@if (loadingUser$ | async) {
+					@if (loading$ | async) {
 						<span class="loading loading-dots loading-sm"></span>
 					}
 				</button>

@@ -17,7 +17,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
 
 	handleError(error: Error): void {
 		const appNotificationService = this.injector.get(AppNotificationService);
-		let errorDetails: IAppError | null = null;
+		let errorDetails: IAppError = { message: '' };
 
 		if (error instanceof HttpErrorResponse) {
 			console.log('Server side error: ', error);

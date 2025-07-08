@@ -43,11 +43,13 @@ export const appConfig: ApplicationConfig = {
 		},
 		provideToastr({
 			// toastComponent: CustomToastComponent,
-			closeButton: true,
-			timeOut: 5000,
+			closeButton: false,
+			timeOut: 7000,
 			easing: 'ease-in',
 			progressBar: true,
 			positionClass: 'toast-top-right',
+			preventDuplicates: true,
+			// disableTimeOut: true,
 		}),
 	],
 };

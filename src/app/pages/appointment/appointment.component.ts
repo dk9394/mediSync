@@ -7,9 +7,11 @@ import { Observable, takeUntil } from 'rxjs';
 import { AuthDialogService } from '../../components/auth-dialog/auth-dialog.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { IDoctor } from '../../models/doctors.interfaces';
+import { AppNotificationService } from '../../services/app-notification.service';
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
 import { selectDoctors } from '../../store/doctors/doctors.selectors';
 import { selectUser } from '../../store/user/user.selectors';
+import { AppNotifications } from '../../utils/app-notifications';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 import { AppointmentService, IBookingSlot } from './appointment.service';
 
@@ -25,6 +27,7 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 	route = inject(ActivatedRoute);
 	appointmentService = inject(AppointmentService);
 	authDialogService = inject(AuthDialogService);
+	appNotificationService = inject(AppNotificationService);
 
 	doctor$!: Observable<IDoctor | null>;
 	bookingSlots: IBookingSlot[] = this.appointmentService.getBookingSlots();
@@ -61,6 +64,7 @@ export class AppointmentComponent extends UntilDestroyed implements OnInit {
 		if (this.isUserLoggedIn) {
 			console.log(this.bookingSlot);
 		} else {
+			this.appNotificationService.showWarning(AppNotifications.LOGIN_WARNING);
 			this.authDialogService.open();
 		}
 	}

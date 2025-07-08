@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IAppError } from './global-error-handler.service';
 
 export interface IAppNotification {
-	title: string;
+	title?: string;
 	message: string;
 }
 
