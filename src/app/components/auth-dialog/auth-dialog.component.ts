@@ -24,14 +24,14 @@ import { AuthDialogService } from './auth-dialog.service';
 })
 export class AuthDialogComponent extends UntilDestroyed implements OnInit {
 	store = inject(Store);
-	authDialogService = inject(AuthDialogService);
 	fb = inject(FormBuilder);
+	authDialogService = inject(AuthDialogService);
 
 	// Update user role based on user type login
 	userRole = UserRole.User;
 	isCreateMode = false;
 	form!: FormGroup;
-	loadingUser$!: Observable<boolean>;
+	loading$!: Observable<boolean>;
 
 	get nameField() {
 		return this.form.get('name');
@@ -54,7 +54,7 @@ export class AuthDialogComponent extends UntilDestroyed implements OnInit {
 					this.authDialogService.close();
 				}
 			});
-		this.loadingUser$ = this.store.select(selectUser.loading);
+		this.loading$ = this.store.select(selectUser.loading);
 		this.authDialogService.isCreateMode$.pipe(takeUntil(this.destroy$)).subscribe((mode) => {
 			this.isCreateMode = mode;
 			this.initializeForm();

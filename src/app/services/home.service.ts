@@ -10,8 +10,10 @@ import { IDoctorResponse, IDoctorSpeciality } from '../models/doctors.interfaces
 export class HomeService {
 	httpClient = inject(HttpClient);
 
+	private DOCTORS_ENDPOINT = '/api/doctor';
+
 	getAllDoctors(): Observable<IDoctorResponse> {
-		return this.httpClient.get<IDoctorResponse>('/api/doctor/list');
+		return this.httpClient.get<IDoctorResponse>(`${this.DOCTORS_ENDPOINT}/list`);
 	}
 
 	getSpecialities(): IDoctorSpeciality[] {
