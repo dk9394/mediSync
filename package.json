@@ -13,7 +13,8 @@
 		"lint": "eslint",
 		"lint:fix": "npx eslint . --fix",
 		"format": "npx prettier . --write",
-		"prepare": "husky"
+		"prepare": "husky",
+		"clean": "rm -rf node_modules dist package-lock.json && npm install"
 	},
 	"private": true,
 	"dependencies": {
