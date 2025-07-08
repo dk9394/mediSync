@@ -11,7 +11,7 @@ import { AppNotificationService } from '../../services/app-notification.service'
 import { DoctorsActions } from '../../store/doctors/doctors.actions';
 import { selectDoctors } from '../../store/doctors/doctors.selectors';
 import { selectUser } from '../../store/user/user.selectors';
-import { AppNotifications } from '../../utils/app-notifications';
+import { AppNotifications } from '../../utils/app-notifications.constants';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 import { AppointmentService, IBookingSlot } from './appointment.service';
 

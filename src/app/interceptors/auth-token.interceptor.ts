@@ -3,7 +3,7 @@ import { UserRole } from '../models/user.interfaces';
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
 	const token = localStorage.getItem('auth-token');
-	const role = localStorage.getItem('auth-userRole');
+	const role = localStorage.getItem('auth-user-role');
 
 	const reqHeaders: { token?: string; atoken?: string; dtoken?: string } = {};
 
