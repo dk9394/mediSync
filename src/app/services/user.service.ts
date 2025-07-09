@@ -6,6 +6,7 @@ import {
 	ILoginCredentials,
 	ILoginResponse,
 	ILoginWithRoleResponse,
+	IUser,
 	IUserResponse,
 } from '../models/user.interfaces';
 
@@ -32,6 +33,10 @@ export class UserService {
 
 	getProfile(): Observable<IUserResponse> {
 		return this.httpClient.get<IUserResponse>(`${this.USER_ENDPOINT}/get-profile`);
+	}
+
+	updateProfile(userData: IUser): Observable<IUserResponse> {
+		return this.httpClient.post<IUserResponse>(`${this.USER_ENDPOINT}/update-profile`, userData);
 	}
 
 	logout(): Observable<boolean> {

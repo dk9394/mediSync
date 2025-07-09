@@ -19,20 +19,19 @@
 
 	<div class="flex items-center gap-4">
 		@if (loggedInUser) {
-			<div class="group relative" [class.active]="isDropdownVisible">
-				<div class="flex items-center gap-2 cursor-pointer" (click)="toggleDropdown()">
+			<div class="dropdown dropdown-end">
+				<div tabindex="0" role="button" class="flex items-center gap-2 cursor-pointer">
 					<img class="w-8 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
 					<img class="w-2.5" src="icons/caret-down.svg" alt="Caret icon" />
 				</div>
-				<div
-					class="absolute top-0 right-0 mt-13 text-base text-gray-600 z-20 hidden group-[.active]:block"
+				<ul
+					tabindex="0"
+					class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm mt-3"
 				>
-					<div class="min-w-48 bg-base-300 rounded flex flex-col gap-4 p-4">
-						<p class="hover:text-black cursor-pointer">My Profile</p>
-						<p class="hover:text-black cursor-pointer">My Appointments</p>
-						<p class="hover:text-black cursor-pointer" (click)="onLogout()">Logout</p>
-					</div>
-				</div>
+					<li><a [routerLink]="['/my', 'profile']">My Profile</a></li>
+					<li><a [routerLink]="['/my', 'appointments']">My Appointments</a></li>
+					<li><a class="cursor-pointer text-error" (click)="onLogout()">Logout</a></li>
+				</ul>
 			</div>
 		} @else {
 			<button
@@ -94,7 +93,7 @@
 					<div class="flex items-center gap-4 py-2 px-4 bg-base-300 rounded-full">
 						<img class="w-10 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
 						<p class="font-medium text-xl text-center flex-1">{{ loggedInUser.name }}</p>
-						<a class="cursor-pointer text-error w-10" (click)="onLogout()">
+						<a class="cursor-pointer text-error w-10">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="30"

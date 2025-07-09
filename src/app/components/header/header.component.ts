@@ -24,7 +24,6 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 
 	loggedInUser: IUser | null = null;
 	isMobileMenuOpen = false;
-	isDropdownVisible = false;
 
 	menu: IMenu[] = [
 		{
@@ -68,10 +67,6 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 
 	hideMobileMenu(): void {
 		this.isMobileMenuOpen = false;
-	}
-
-	toggleDropdown(): void {
-		this.isDropdownVisible = !this.isDropdownVisible;
 	}
 
 	onLogin(): void {

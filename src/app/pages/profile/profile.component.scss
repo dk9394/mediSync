@@ -1,0 +1,42 @@
+.input-field.ng-invalid.ng-touched {
+	--input-color: var(--color-error);
+	color: var(--input-color);
+}
+
+.validator-hint {
+	display: none;
+	visibility: visible;
+	--input-color: var(--color-error);
+	color: var(--input-color);
+
+	&.invalid {
+		display: block;
+	}
+}
+
+.upload {
+	overflow: hidden;
+
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		z-index: 1;
+		background-color: rgba($color: #000000, $alpha: 0.7);
+	}
+
+	&.selected {
+		&::after {
+			background-color: rgba($color: #000000, $alpha: 0.4);
+		}
+	}
+
+	.upload-icon {
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

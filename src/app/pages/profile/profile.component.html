@@ -1,0 +1,210 @@
+@if (user) {
+	<form (submit)="onSubmit()" [formGroup]="form" class="user-form max-w-100">
+		<div>
+			<div class="my-8 w-40 h-40 flex items-center justify-center rounded-md overflow-hidden">
+				@if (isEditMode) {
+					<label htmlFor="image" class="relative w-full h-full overflow-hidden">
+						<div
+							class="cursor-pointer"
+							[class.upload]="isEditMode"
+							[class.selected]="selectedImage"
+						>
+							<img class="max-w-auto" [src]="selectedImage ?? user.image" alt="Profile image" />
+							<img
+								class="upload-icon w-10 absolute z-2"
+								src="assets/upload_icon.png"
+								alt="Upload icon"
+							/>
+						</div>
+						<input (change)="setImage($event)" type="file" id="image" hidden />
+					</label>
+				} @else {
+					<img class="max-w-auto" [src]="user.image" alt="User image" />
+				}
+			</div>
+			<fieldset class="fieldset">
+				@if (isEditMode) {
+					<input
+						type="text"
+						class="input input-field w-full"
+						placeholder="Enter Full name ..."
+						formControlName="name"
+					/>
+					<p
+						class="validator-hint mt-0 mb-1"
+						[class.invalid]="nameField?.touched && nameField?.invalid"
+					>
+						Full name is required.
+					</p>
+				} @else {
+					<p class="text-2xl font-medium">{{ user.name }}</p>
+				}
+			</fieldset>
+		</div>
+		<hr class="my-5" />
+		<div class="mb-5">
+			<div class="underline opacity-50 mb-3 text-base">Contact Information</div>
+			<fieldset class="fieldset flex items-center gap-5">
+				<label for="user-email" class="fieldset-legend font-normal text-sm py-1 w-30">Email</label>
+				<div class="flex-1">
+					<p class="text-base font-medium">{{ user.email }}</p>
+				</div>
+			</fieldset>
+			<fieldset class="fieldset flex items-center gap-5">
+				<label for="user-phone" class="fieldset-legend font-normal text-sm py-1 w-30">Phone</label>
+				<div class="flex-1">
+					@if (isEditMode) {
+						<input
+							id="user-phone"
+							type="phone"
+							class="input input-field w-full"
+							placeholder="Enter phone ..."
+							formControlName="phone"
+						/>
+						<p
+							class="validator-hint mt-0 mb-1"
+							[class.invalid]="phoneField?.touched && phoneField?.invalid"
+						>
+							Phone is required.
+						</p>
+					} @else {
+						<p class="text-base font-medium">{{ user.phone }}</p>
+					}
+				</div>
+			</fieldset>
+			<fieldset class="fieldset flex items-center gap-5" formGroupName="address">
+				<label class="fieldset-legend font-normal text-sm py-1 w-30">Address</label>
+				<div class="flex-1">
+					@if (isEditMode) {
+						<fieldset>
+							<label for="user-address-line1" class="fieldset-legend font-normal text-sm py-2 w-30"
+								>Line 1</label
+							>
+							<input
+								id="user-address-line1"
+								type="text"
+								class="input input-field w-full"
+								placeholder="Enter address line 1 ..."
+								formControlName="line1"
+							/>
+							<p
+								class="validator-hint mt-0 mb-1"
+								[class.invalid]="
+									addressField?.get('line1')?.touched && addressField?.get('line1')?.invalid
+								"
+							>
+								Line1 is required.
+							</p>
+						</fieldset>
+						<fieldset>
+							<label for="user-address-line2" class="fieldset-legend font-normal text-sm py-2 w-30"
+								>Line 2</label
+							>
+							<input
+								id="user-address-line2"
+								type="text"
+								class="input input-field w-full"
+								placeholder="Enter address line2 ..."
+								formControlName="line2"
+							/>
+							<p
+								class="validator-hint mt-0 mb-1"
+								[class.invalid]="
+									addressField?.get('line2')?.touched && addressField?.get('line2')?.invalid
+								"
+							>
+								Line2 is required.
+							</p>
+						</fieldset>
+					} @else {
+						<p class="text-base font-medium">{{ user.address.line1 }}</p>
+						<p class="text-base font-medium">{{ user.address.line2 }}</p>
+					}
+				</div>
+			</fieldset>
+		</div>
+		<div class="mb-5">
+			<div class="underline opacity-50 mb-3 text-base">Basic Information</div>
+			<fieldset class="fieldset flex items-center gap-5">
+				<label for="user-gender" class="fieldset-legend font-normal text-sm py-1 w-30"
+					>Gender</label
+				>
+				<div class="flex-1">
+					@if (isEditMode) {
+						<input
+							id="user-gender"
+							type="text"
+							class="input input-field w-full"
+							placeholder="Enter gender ..."
+							formControlName="gender"
+						/>
+						<p
+							class="validator-hint mt-0 mb-1"
+							[class.invalid]="genderField?.touched && genderField?.invalid"
+						>
+							Gender is required.
+						</p>
+					} @else {
+						<p class="text-base font-medium">{{ user.gender }}</p>
+					}
+				</div>
+			</fieldset>
+			<fieldset class="fieldset flex items-center gap-5">
+				<label for="user-dob" class="fieldset-legend font-normal text-sm py-1 w-30">Birthday</label>
+				<div class="flex-1">
+					@if (isEditMode) {
+						<input
+							id="user-dob"
+							type="text"
+							class="input input-field w-full"
+							placeholder="Enter Birthday ..."
+							formControlName="dob"
+						/>
+						<p
+							class="validator-hint mt-0 mb-1"
+							[class.invalid]="dobField?.touched && dobField?.invalid"
+						>
+							Birthday is required.
+						</p>
+					} @else {
+						<p class="text-base font-medium">{{ user.dob }}</p>
+					}
+				</div>
+			</fieldset>
+		</div>
+		<div class="mb-20 mt-10">
+			@if (isEditMode) {
+				<div class="flex items-center gap-3">
+					<button
+						type="submit"
+						class="btn btn-primary text-sm rounded-full px-10"
+						[disabled]="form.invalid || loading"
+					>
+						<span>Save profile</span>
+						@if (loading) {
+							<span class="loading loading-dots loading-sm"></span>
+						}
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary btn-outline text-sm rounded-full px-10"
+						[class.hidden]="loading"
+						(click)="onEditCancel()"
+					>
+						Cancel
+					</button>
+				</div>
+			} @else {
+				<button
+					type="button"
+					class="btn btn-primary btn-outline text-sm rounded-full px-10"
+					(click)="isEditMode = true"
+				>
+					Edit profile
+				</button>
+			}
+		</div>
+	</form>
+} @else {
+	<app-loading></app-loading>
+}
