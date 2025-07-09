@@ -63,5 +63,24 @@ export const userReducer = createReducer(
 		success: false,
 		failure: true,
 		failureMsg: message,
+	})),
+	on(UserActions.logoutUser, (state) => ({ ...state, loading: true })),
+	on(UserActions.logoutUserSuccess, (state) => ({
+		...state,
+		token: null,
+		role: null,
+		userData: null,
+		loading: false,
+		success: true,
+		successMsg: null,
+		failure: false,
+		failureMsg: null,
+	})),
+	on(UserActions.logoutUserFailure, (state, { message }) => ({
+		...state,
+		loading: false,
+		success: false,
+		failure: true,
+		failureMsg: message,
 	}))
 );

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { takeUntil } from 'rxjs';
 
 import { IUser } from '../../models/user.interfaces';
+import { UserActions } from '../../store/user/user.actions';
 import { selectUser } from '../../store/user/user.selectors';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
 import { AuthDialogService } from '../auth-dialog/auth-dialog.service';
@@ -76,6 +77,10 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 	onLogin(): void {
 		this.hideMobileMenu();
 		this.authDialogService.open();
+	}
+
+	onLogout(): void {
+		this.store.dispatch(UserActions.logoutUser());
 	}
 
 	onCreateAccount(): void {

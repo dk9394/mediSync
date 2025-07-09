@@ -8,4 +8,8 @@ export abstract class AppNotifications {
 		title: 'Login required',
 		message: `Please login to book appointment`,
 	};
+	static readonly LOGOUT_INFO: IAppNotification = {
+		title: 'Logout',
+		message: `You're logout successfully`,
+	};
 }

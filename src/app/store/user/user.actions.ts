@@ -14,6 +14,10 @@ const LOAD_USER_PROFILE = '[USER] load user profile';
 const LOAD_USER_PROFILE_SUCCESS = '[USER] load user profile success';
 const LOAD_USER_PROFILE_FAILURE = '[USER] load user profile failure';
 
+const LOGOUT_USER = '[USER] logout user';
+const LOGOUT_USER_SUCCESS = '[USER] logout user success';
+const LOGOUT_USER_FAILURE = '[USER] logout user failure';
+
 const loadUser = createAction(LOAD_USER, props<{ loginCredentials: ILoginCredentials }>());
 const loadUserSuccess = createAction(LOAD_USER_SUCCESS, props<{ data: ILoginWithRoleResponse }>());
 const loadUserFailure = createAction(LOAD_USER_FAILURE, props<{ message: string }>());
@@ -28,6 +32,10 @@ const loadUserProfileFailure = createAction(
 	props<{ message: string }>()
 );
 
+const logoutUser = createAction(LOGOUT_USER);
+const logoutUserSuccess = createAction(LOGOUT_USER_SUCCESS);
+const logoutUserFailure = createAction(LOGOUT_USER_FAILURE, props<{ message: string }>());
+
 export const UserActions = {
 	loadUser,
 	loadUserSuccess,
@@ -35,4 +43,7 @@ export const UserActions = {
 	loadUserProfile,
 	loadUserProfileSuccess,
 	loadUserProfileFailure,
+	logoutUser,
+	logoutUserSuccess,
+	logoutUserFailure,
 };
