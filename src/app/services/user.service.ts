@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 
 import {
 	ILoginCredentials,
@@ -32,5 +32,9 @@ export class UserService {
 
 	getProfile(): Observable<IUserResponse> {
 		return this.httpClient.get<IUserResponse>(`${this.USER_ENDPOINT}/get-profile`);
+	}
+
+	logout(): Observable<boolean> {
+		return of(true);
 	}
 }

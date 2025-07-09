@@ -44,7 +44,7 @@ export const appConfig: ApplicationConfig = {
 		provideToastr({
 			// toastComponent: CustomToastComponent,
 			closeButton: false,
-			timeOut: 7000,
+			// timeOut: 7000,
 			easing: 'ease-in',
 			progressBar: true,
 			positionClass: 'toast-top-right',

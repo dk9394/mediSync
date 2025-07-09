@@ -55,4 +55,23 @@ export class UserEffects {
 			)
 		)
 	);
+
+	logoutUser$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(UserActions.logoutUser),
+			switchMap(() =>
+				this.userService.logout().pipe(
+					map(() => {
+						localStorage.removeItem('auth-token');
+						localStorage.removeItem('auth-user-role');
+						this.appNotificationService.showInfo(AppNotifications.LOGOUT_INFO);
+						return UserActions.logoutUserSuccess();
+					}),
+					catchError((error) => {
+						return of(UserActions.logoutUserFailure({ message: error.message }));
+					})
+				)
+			)
+		)
+	);
 }
