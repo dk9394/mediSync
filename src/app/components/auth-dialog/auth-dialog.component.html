@@ -87,7 +87,11 @@
 				<p class="label hidden">Optional</p>
 			</fieldset>
 			<div class="mb-2 mt-4">
-				<button type="submit" class="btn btn-primary w-full text-base" [disabled]="form.invalid">
+				<button
+					type="submit"
+					class="btn btn-primary w-full text-base"
+					[disabled]="form.invalid || (loading$ | async)"
+				>
 					<span>{{ isCreateMode ? 'Create account' : 'Login' }}</span>
 					@if (loading$ | async) {
 						<span class="loading loading-dots loading-sm"></span>

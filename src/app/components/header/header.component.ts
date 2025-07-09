@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { takeUntil } from 'rxjs';
 
 import { IUser } from '../../models/user.interfaces';
+import { UserService } from '../../services/user.service';
 import { UserActions } from '../../store/user/user.actions';
 import { selectUser } from '../../store/user/user.selectors';
 import { UntilDestroyed } from '../../utils/until-destroyed.directive';
@@ -21,10 +22,11 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 	store = inject(Store);
 	router = inject(Router);
 	authDialogService = inject(AuthDialogService);
+	userService = inject(UserService);
 
 	loggedInUser: IUser | null = null;
 	isMobileMenuOpen = false;
-	isDropdownVisible = false;
+	myLinks = this.userService.userLinks;
 
 	menu: IMenu[] = [
 		{
@@ -68,10 +70,6 @@ export class HeaderComponent extends UntilDestroyed implements OnInit {
 
 	hideMobileMenu(): void {
 		this.isMobileMenuOpen = false;
-	}
-
-	toggleDropdown(): void {
-		this.isDropdownVisible = !this.isDropdownVisible;
 	}
 
 	onLogin(): void {

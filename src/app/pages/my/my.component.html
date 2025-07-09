@@ -1,0 +1,30 @@
+<section class="md:flex md:items-start sm:gap-8 mt-5">
+	<div class="flex items-center gap-5 md:block mb-8 md:mb-0">
+		<div class="flex-1 text-sm opacity-50 px-4 py-2">My Links</div>
+		<ul class="menu bg-base-100 w-50 xl:w-60 2xl:w-75 hidden md:block">
+			@for (item of myLinks; track $index) {
+				<li
+					class="group"
+					[routerLink]="[item.url]"
+					routerLinkActive="active"
+					[routerLinkActiveOptions]="{ exact: true }"
+				>
+					<a class="text-base group-[.active]:font-bold py-2.5">{{ item.label }}</a>
+				</li>
+			}
+		</ul>
+		<select
+			class="select md:hidden w-auto"
+			[(ngModel)]="currentUrl"
+			(change)="onMyLinkChange($event)"
+		>
+			@for (item of myLinks; track $index) {
+				<option [value]="item.url">{{ item.label }}</option>
+			}
+		</select>
+	</div>
+	<div class="flex-1">
+		<!-- <h1 class="text-2xl font-medium mb-6">Page header</h1> -->
+		<router-outlet></router-outlet>
+	</div>
+</section>

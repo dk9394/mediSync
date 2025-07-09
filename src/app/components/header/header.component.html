@@ -18,30 +18,31 @@
 	</ul>
 
 	<div class="flex items-center gap-4">
-		@if (loggedInUser) {
-			<div class="group relative" [class.active]="isDropdownVisible">
-				<div class="flex items-center gap-2 cursor-pointer" (click)="toggleDropdown()">
-					<img class="w-8 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
-					<img class="w-2.5" src="icons/caret-down.svg" alt="Caret icon" />
-				</div>
-				<div
-					class="absolute top-0 right-0 mt-13 text-base text-gray-600 z-20 hidden group-[.active]:block"
-				>
-					<div class="min-w-48 bg-base-300 rounded flex flex-col gap-4 p-4">
-						<p class="hover:text-black cursor-pointer">My Profile</p>
-						<p class="hover:text-black cursor-pointer">My Appointments</p>
-						<p class="hover:text-black cursor-pointer" (click)="onLogout()">Logout</p>
+		<div class="hidden md:block">
+			@if (loggedInUser) {
+				<div class="dropdown dropdown-end">
+					<div tabindex="0" role="button" class="flex items-center gap-2 cursor-pointer">
+						<img class="w-8 rounded-full" [src]="loggedInUser.image" alt="Profile picture" />
+						<img class="w-2.5" src="icons/caret-down.svg" alt="Caret icon" />
 					</div>
+					<ul
+						tabindex="0"
+						class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm mt-3"
+					>
+						<li><a [routerLink]="['/my', 'profile']">My Profile</a></li>
+						<li><a [routerLink]="['/my', 'appointments']">My Appointments</a></li>
+						<li><a class="cursor-pointer text-error" (click)="onLogout()">Logout</a></li>
+					</ul>
 				</div>
-			</div>
-		} @else {
-			<button
-				class="btn btn-primary rounded-full font-light hidden md:block"
-				(click)="onCreateAccount()"
-			>
-				Create account
-			</button>
-		}
+			} @else {
+				<button
+					class="btn btn-primary rounded-full font-light hidden md:block"
+					(click)="onCreateAccount()"
+				>
+					Create account
+				</button>
+			}
+		</div>
 		<a class="cursor-pointer" (click)="showMobileMenu()">
 			<img class="w-6 md:hidden" src="icons/menu-icon.svg" alt="Menu icon" />
 		</a>
@@ -69,7 +70,24 @@
 					</svg>
 				</a>
 			</div>
-			<ul class="flex flex-col flex-1 gap-2 py-4 text-base font-normal">
+			<!-- <ul class="flex flex-col flex-1 gap-2 py-4 text-base font-normal">
+				@for (item of menu; track item.id) {
+					<li
+						class="group px-4"
+						[routerLink]="item.url"
+						routerLinkActive="active"
+						[routerLinkActiveOptions]="{ exact: true }"
+						[class.continue-route]="hasQueryParamsOrDynamicRoute(item.url)"
+						(click)="hideMobileMenu()"
+					>
+						<a
+							class="px-0 py-2 block group-[.active]:text-primary group-[.continue-route]:text-primary"
+							>{{ item.name | uppercase }}</a
+						>
+					</li>
+				}
+			</ul> -->
+			<ul class="menu flex flex-col flex-1 gap-2 py-4 text-base font-normal">
 				@for (item of menu; track item.id) {
 					<li
 						class="group px-4"
@@ -86,6 +104,26 @@
 						<!-- <hr
 							class="border-none outline-none h-0.5 bg-primary w-1/2 group-[.active]:block group-[.continue-route]:block hidden"
 						/> -->
+					</li>
+				}
+				@if (loggedInUser) {
+					<li class="mt-3">
+						<p class="opacity-30 px-4 font-medium">My Links</p>
+						<ul class="flex flex-col flex-1 gap-2 py-4 text-base font-normal">
+							@for (item of myLinks; track $index) {
+								<li
+									class="group"
+									[routerLink]="['/my', item.url]"
+									routerLinkActive="active"
+									[routerLinkActiveOptions]="{ exact: true }"
+									(click)="hideMobileMenu()"
+								>
+									<a class="px-4 py-2 block group-[.active]:text-primary">{{
+										item.label | uppercase
+									}}</a>
+								</li>
+							}
+						</ul>
 					</li>
 				}
 			</ul>

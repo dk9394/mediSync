@@ -12,4 +12,7 @@ export abstract class AppNotifications {
 		title: 'Logout',
 		message: `You're logout successfully`,
 	};
+	static readonly USER_UPDATE: IAppNotification = {
+		message: `You're profile updated successfully`,
+	};
 }

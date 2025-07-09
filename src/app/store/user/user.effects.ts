@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 
@@ -9,6 +10,7 @@ import { UserActions } from './user.actions';
 
 @Injectable()
 export class UserEffects {
+	router = inject(Router);
 	private actions$ = inject(Actions);
 	private userService = inject(UserService);
 	appNotificationService = inject(AppNotificationService);
@@ -65,11 +67,32 @@ export class UserEffects {
 						localStorage.removeItem('auth-token');
 						localStorage.removeItem('auth-user-role');
 						this.appNotificationService.showInfo(AppNotifications.LOGOUT_INFO);
+						this.router.navigateByUrl('/');
 						return UserActions.logoutUserSuccess();
 					}),
 					catchError((error) => {
 						return of(UserActions.logoutUserFailure({ message: error.message }));
 					})
+				)
+			)
+		)
+	);
+
+	updateUserProfile$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(UserActions.updateUserProfile),
+			switchMap(({ userData }) =>
+				this.userService.updateProfile(userData).pipe(
+					map((data) => {
+						this.appNotificationService.showSuccess({
+							message: AppNotifications.USER_UPDATE.message,
+							title: data.userData.name,
+						});
+						return UserActions.updateUserProfileSuccess({ data });
+					}),
+					catchError((error) =>
+						of(UserActions.updateUserProfileFailure({ message: error.message }))
+					)
 				)
 			)
 		)

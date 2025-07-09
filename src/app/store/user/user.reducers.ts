@@ -82,5 +82,22 @@ export const userReducer = createReducer(
 		success: false,
 		failure: true,
 		failureMsg: message,
+	})),
+	on(UserActions.updateUserProfile, (state) => ({ ...state, loading: true })),
+	on(UserActions.updateUserProfileSuccess, (state, { data }) => ({
+		...state,
+		userData: data.userData,
+		loading: false,
+		success: data.success,
+		successMsg: data.message,
+		failure: false,
+		failureMsg: null,
+	})),
+	on(UserActions.updateUserProfileFailure, (state, { message }) => ({
+		...state,
+		loading: false,
+		success: false,
+		failure: true,
+		failureMsg: message,
 	}))
 );

@@ -6,8 +6,15 @@ import {
 	ILoginCredentials,
 	ILoginResponse,
 	ILoginWithRoleResponse,
+	IUser,
 	IUserResponse,
 } from '../models/user.interfaces';
+
+export interface IUserLink {
+	id: number;
+	label: string;
+	url: string;
+}
 
 @Injectable({
 	providedIn: 'root',
@@ -34,7 +41,24 @@ export class UserService {
 		return this.httpClient.get<IUserResponse>(`${this.USER_ENDPOINT}/get-profile`);
 	}
 
+	updateProfile(userData: IUser): Observable<IUserResponse> {
+		return this.httpClient.post<IUserResponse>(`${this.USER_ENDPOINT}/update-profile`, userData);
+	}
+
 	logout(): Observable<boolean> {
 		return of(true);
 	}
+
+	userLinks: IUserLink[] = [
+		{
+			id: 1,
+			label: 'Profile',
+			url: 'profile',
+		},
+		{
+			id: 2,
+			label: 'Appointments',
+			url: 'appointments',
+		},
+	];
 }
