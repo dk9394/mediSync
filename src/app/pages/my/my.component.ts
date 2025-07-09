@@ -1,37 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-export interface IMyLink {
-	id: number;
-	label: string;
-	url: string;
-}
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'app-my',
-	imports: [CommonModule, RouterModule],
+	imports: [CommonModule, RouterModule, FormsModule],
 	templateUrl: './my.component.html',
 	styleUrl: './my.component.scss',
 })
-export class MyComponent {
+export class MyComponent implements OnInit {
 	router = inject(Router);
 	route = inject(ActivatedRoute);
+	userService = inject(UserService);
 
-	myLinks = [
-		{
-			id: 1,
-			label: 'Profile',
-			url: 'profile',
-		},
-		{
-			id: 2,
-			label: 'Appointments',
-			url: 'appointments',
-		},
-	];
+	currentUrl!: string;
+	myLinks = this.userService.userLinks;
+
+	ngOnInit(): void {
+		// This logic below needs to be reactive not static
+		const fragments = this.router.url.split('/');
+		this.currentUrl = fragments[fragments.length - 1];
+	}
 
 	onMyLinkChange(event: Event) {
-		this.router.navigate([(event.target as HTMLInputElement).value], { relativeTo: this.route });
+		const url = (event.target as HTMLInputElement).value;
+		this.router.navigate([url], { relativeTo: this.route });
+		this.currentUrl = url;
 	}
 }

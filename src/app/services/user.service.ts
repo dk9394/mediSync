@@ -10,6 +10,12 @@ import {
 	IUserResponse,
 } from '../models/user.interfaces';
 
+export interface IUserLink {
+	id: number;
+	label: string;
+	url: string;
+}
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -42,4 +48,17 @@ export class UserService {
 	logout(): Observable<boolean> {
 		return of(true);
 	}
+
+	userLinks: IUserLink[] = [
+		{
+			id: 1,
+			label: 'Profile',
+			url: 'profile',
+		},
+		{
+			id: 2,
+			label: 'Appointments',
+			url: 'appointments',
+		},
+	];
 }

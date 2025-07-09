@@ -13,7 +13,11 @@
 				</li>
 			}
 		</ul>
-		<select class="select md:hidden w-auto" (change)="onMyLinkChange($event)">
+		<select
+			class="select md:hidden w-auto"
+			[(ngModel)]="currentUrl"
+			(change)="onMyLinkChange($event)"
+		>
 			@for (item of myLinks; track $index) {
 				<option [value]="item.url">{{ item.label }}</option>
 			}
